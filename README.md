@@ -1,9 +1,10 @@
 # GestCare
 
 ## Integrantes
+
 - Kauê De Oliveira Mata
 - Breno Ferreira Gomes
 
-## Objetivo
-Permitir que o paciente organize, armazene e consulte documentos médicos digitalizados de forma simples e centralizada.
-  
+## Jyra
+
+Para acessar o DashBoard clique [aqui](https://brenoferreirabre2.atlassian.net/jira/software/projects/SCRUM/boards/1)

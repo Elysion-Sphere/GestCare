@@ -1,0 +1,153 @@
+package br.com.elysium.GestCare.model;
+
+import jakarta.persistence.*;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+@Entity
+@Table(name = "patient")
+public class Patient implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "first_name", nullable = false, length = 80)
+    private String name;
+
+    @Column(name = "last_name", nullable = false, length = 100)
+    private String lastName;
+
+    @Column(nullable = false, length = 15)
+    private String cpf;
+
+    @Column(name = "birth_date", nullable = false)
+    private LocalDate birthDate;
+
+    @Column(unique = true, length = 60)
+    private String email;
+
+    @Column(length = 20)
+    private String telephone;
+
+    @Column(nullable = false, length = 255)
+    private String password;
+
+    @Column(nullable = false)
+    private Integer gender;
+
+    @Column(name = "join_date")
+    private LocalDateTime joinDate;
+
+    @Column(columnDefinition = "BIT(1)")
+    private Boolean verified;
+
+    public Patient() {
+    }
+
+    // Getters and Setters
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public LocalDateTime getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(LocalDateTime joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    public Boolean getVerified() {
+        return verified;
+    }
+
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Patient patient)) return false;
+        return getId() == patient.getId() && Objects.equals(getName(), patient.getName()) && Objects.equals(getLastName(), patient.getLastName()) && Objects.equals(getCpf(), patient.getCpf()) && Objects.equals(getBirthDate(), patient.getBirthDate()) && Objects.equals(getEmail(), patient.getEmail()) && Objects.equals(getTelephone(), patient.getTelephone()) && Objects.equals(getPassword(), patient.getPassword()) && Objects.equals(getGender(), patient.getGender()) && Objects.equals(getJoinDate(), patient.getJoinDate()) && Objects.equals(getVerified(), patient.getVerified());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getLastName(), getCpf(), getBirthDate(), getEmail(), getTelephone(), getPassword(), getGender(), getJoinDate(), getVerified());
+    }
+}
