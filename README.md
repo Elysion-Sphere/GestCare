@@ -15,3 +15,22 @@ Sistema desenvolvido com foco em gestão na área da saúde, utilizando metodolo
 O acompanhamento das tarefas, sprints e progresso do projeto pode ser feito através do Jira:
 🔗 Dashboard do Projeto:
 👉 https://brenoferreirabre2.atlassian.net/jira/software/projects/SCRUM/boards/1
+
+## 🚀Tecnologias Utilizadas
+🔧 Back-end
+-Java 21
+-Maven (Gerenciamento de dependências)
+
+🗄️ Banco de Dados
+-MySQL 8
+
+🎨 Front-end
+-HTML
+-CSS
+-JavaScript
+
+🛠️ Ferramentas de Desenvolvimento e Apoio
+IntelliJ IDEA (IDE)
+Postman (Testes de API)
+HeidiSQL (Gerenciamento do banco de dados)
+DBdiagram (Modelagem do banco de dados)
