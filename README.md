@@ -30,7 +30,7 @@ O acompanhamento das tarefas, sprints e progresso do projeto pode ser feito atra
 -JavaScript
 
 🛠️ Ferramentas de Desenvolvimento e Apoio
-IntelliJ IDEA (IDE)
-Postman (Testes de API)
-HeidiSQL (Gerenciamento do banco de dados)
-DBdiagram (Modelagem do banco de dados)
+-IntelliJ IDEA (IDE)
+-Postman (Testes de API)
+-HeidiSQL (Gerenciamento do banco de dados)
+-DBdiagram (Modelagem do banco de dados)
