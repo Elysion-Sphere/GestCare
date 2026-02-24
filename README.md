@@ -1,4 +1,4 @@
-## 🏥 GestCare
+# 🏥 GestCare
 
 Sistema web REST desenvolvido para gerenciamento de documentos médicos pessoais, permitindo ao paciente cadastrar hospitais, consultas, exames, laudos e armazenar arquivos digitais.
 
