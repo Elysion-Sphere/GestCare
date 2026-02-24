@@ -2,10 +2,7 @@ package br.com.elysium.GestCare.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -45,12 +42,14 @@ public class Patient implements Serializable {
     @Column(length = 20)
     private String telephone;
 
+
+    @NotBlank(message = "A senha é obrigatória!")
+    @Size(min = 6, message = "A senha deve possuir no mínimo 6 caracteres!")
     @Column(nullable = false, length = 255)
     private String password;
 
     @Column(nullable = false)
     private Integer gender;
-
 
     @Column(name = "join_date")
     private LocalDateTime joinDate;
