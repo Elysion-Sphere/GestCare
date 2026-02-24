@@ -1,6 +1,7 @@
 package br.com.elysium.GestCare.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -53,8 +54,14 @@ public class Patient implements Serializable {
     @Column(nullable = false)
     private Integer gender;
 
-    @Column(name = "join_date")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Column(name = "join_date", nullable = false, updatable = false)
     private LocalDateTime joinDate;
+
+    @PrePersist
+    public void prePersist() {
+        this.joinDate = LocalDateTime.now();
+    }
 
     @Column(columnDefinition = "BIT(1)")
     private Boolean verified;

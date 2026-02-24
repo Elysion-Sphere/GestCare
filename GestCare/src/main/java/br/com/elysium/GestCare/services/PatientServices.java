@@ -82,11 +82,11 @@ public class PatientServices {
         patientEntity.setEmail(patient.getEmail());
         patientEntity.setTelephone(patient.getTelephone());
         patientEntity.setPassword(patient.getPassword());
-        patientEntity.setJoinDate(patient.getJoinDate());
+       // patientEntity.setJoinDate(patient.getJoinDate());
         patientEntity.setVerified(patient.getVerified());
         patientEntity.setGender(patient.getGender());
 
-        return patientRepository.save(patient);
+        return patientRepository.save(patientEntity);
         //return patient;  //MOCK
     }
 

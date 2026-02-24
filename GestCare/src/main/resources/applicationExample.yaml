@@ -3,7 +3,7 @@ spring:
     name: GestCare
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/NomeDoBancoDeDados?useTimezone=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/NomeDoBancoDeDados?useTimezone=true&serverTimezone=America/Sao_Paulo
     username: root
     password: SenhaDoBanco
   jpa:
