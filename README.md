@@ -8,7 +8,7 @@ Projeto acadêmico do curso de **Análise e Desenvolvimento de Sistemas (ADS)**,
 
 | Nome                                | RA      | Cargo              |
 | ----------------------------------- | ------- | ------------------ |
-| André Pereira de Almeida            | ?       | Front-end          |
+| André Pereira de Almeida            | 2400544 | Front-end          |
 | Breno Ferreira Gomes                | 2402402 | Gestor (Fullstack) |
 | Gustavo Rocha                       | 2401999 | Back-end           |
 | Kauê De Oliveira Mata               | 2402317 | Back-end           |
