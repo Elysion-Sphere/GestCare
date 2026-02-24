@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -32,6 +34,8 @@ public class Patient implements Serializable {
     @Column(unique = true, nullable = false, length = 15)
     private String cpf;
 
+    @NotNull(message = "A data de nascimento precisa ser informada")
+    @PastOrPresent(message = "A data de nascimento não pode ser futura")
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
@@ -46,6 +50,7 @@ public class Patient implements Serializable {
 
     @Column(nullable = false)
     private Integer gender;
+
 
     @Column(name = "join_date")
     private LocalDateTime joinDate;
