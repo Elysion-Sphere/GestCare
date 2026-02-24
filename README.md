@@ -1,36 +1,49 @@
 ## 🏥 GestCare
-Sistema desenvolvido com foco em gestão na área da saúde, utilizando metodologia ágil para organização e acompanhamento das tarefas do projeto.
+
+Sistema web REST desenvolvido para gerenciamento de documentos médicos pessoais, permitindo ao paciente cadastrar hospitais, consultas, exames, laudos e armazenar arquivos digitais.
+
+Projeto acadêmico do curso de **Análise e Desenvolvimento de Sistemas (ADS)**, da faculdade Impacta.
 
 ## 👥 Integrantes
-| Nome                                | RA      |
-| ----------------------------------- | ------- |
-| Breno Ferreira Gomes                | 2402402 |
-| Kauê De Oliveira Mata               | 2402317 |
-| André Pereira de Almeida            | 2402402 |
-| Kaylaine Beatriz Rodrigues Oliveira | 2402102 |
-| Gustavo Rocha                       | 2401999 |
-| Valdinei Rodrigues Torres           | 2302141 |
+
+| Nome                                | RA      | Cargo              |
+| ----------------------------------- | ------- | ------------------ |
+| André Pereira de Almeida            | ?       | Front-end          |
+| Breno Ferreira Gomes                | 2402402 | Gestor (Fullstack) |
+| Gustavo Rocha                       | 2401999 | Back-end           |
+| Kauê De Oliveira Mata               | 2402317 | Back-end           |
+| Kaylaine Beatriz Rodrigues Oliveira | 2402102 | Front-end          |
+| Valdinei Rodrigues Torres           | 2302141 | Front-end          |
 
 ## 📌 Gestão do Projeto (Jira)
+
 O acompanhamento das tarefas, sprints e progresso do projeto pode ser feito através do Jira:
-🔗 Dashboard do Projeto:
-👉 https://brenoferreirabre2.atlassian.net/jira/software/projects/SCRUM/boards/1
+
+## 🔗 Dashboard do Projeto:
+
+Para acessar o DashBoard do projeto [clique aqui.](https://brenoferreirabre2.atlassian.net/jira/software/projects/SCRUM/boards/1)
 
 ## 🚀Tecnologias Utilizadas
-🔧 Back-end
--Java 21
--Maven (Gerenciamento de dependências)
 
-🗄️ Banco de Dados
--MySQL 8
+### 🔧 Back-end
 
-🎨 Front-end
--HTML
--CSS
--JavaScript
+- Java 21
+- Spring Boot 4.0.2
+- Maven (Gerenciamento de dependências)
 
-🛠️ Ferramentas de Desenvolvimento e Apoio
--IntelliJ IDEA (IDE)
--Postman (Testes de API)
--HeidiSQL (Gerenciamento do banco de dados)
--DBdiagram (Modelagem do banco de dados)
+### 🗄️ Banco de Dados
+
+- MySQL 8
+
+### 🎨 Front-end
+
+- HTML5
+- CSS3
+- JavaScript
+
+### 🛠️ Ferramentas de Desenvolvimento e Apoio
+
+- IntelliJ IDEA (IDE)
+- Postman (Testes de API)
+- HeidiSQL (Gerenciamento do banco de dados)
+- DBdiagram (Modelagem do banco de dados)

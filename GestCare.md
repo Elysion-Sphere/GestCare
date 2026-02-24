@@ -2,7 +2,7 @@
 
 Sistema web REST desenvolvido para gerenciamento de documentos médicos pessoais, permitindo ao paciente cadastrar hospitais, consultas, exames, laudos e armazenar arquivos digitais.
 
-Projeto acadêmico do curso de **Análise e Desenvolvimento de Sistemas (ADS)**.
+Projeto acadêmico do curso de **Análise e Desenvolvimento de Sistemas (ADS)**, da faculdade Impacta.
 
 ---
 
