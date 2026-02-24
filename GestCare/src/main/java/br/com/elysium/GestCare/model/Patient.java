@@ -1,5 +1,6 @@
 package br.com.elysium.GestCare.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -49,6 +50,7 @@ public class Patient implements Serializable {
     @Column(columnDefinition = "BIT(1)")
     private Boolean verified;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Hospital> hospitals = new ArrayList<>();
 
