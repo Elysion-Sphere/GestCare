@@ -2,6 +2,7 @@ package br.com.elysium.GestCare.controllers;
 
 import br.com.elysium.GestCare.model.Patient;
 import br.com.elysium.GestCare.services.PatientServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class PatientController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Patient create(@RequestBody Patient Patient) {
+    public Patient create(@Valid @RequestBody Patient Patient) {
         return service.create(Patient);
     }
 
@@ -46,7 +47,7 @@ public class PatientController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Patient update(@RequestBody Patient Patient) {
+    public Patient update(@Valid  @RequestBody Patient Patient) {
         return service.update(Patient);
     }
 

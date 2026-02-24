@@ -2,6 +2,8 @@ package br.com.elysium.GestCare.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -20,13 +22,14 @@ public class Patient implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "O nome do paciente precisa estar preenchido")
     @Column(name = "first_name", nullable = false, length = 80)
     private String name;
 
     @Column(name = "last_name", nullable = false, length = 100)
     private String lastName;
 
-    @Column(nullable = false, length = 15)
+    @Column(unique = true, nullable = false, length = 15)
     private String cpf;
 
     @Column(name = "birth_date", nullable = false)
