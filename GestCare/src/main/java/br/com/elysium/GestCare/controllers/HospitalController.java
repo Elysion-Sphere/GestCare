@@ -2,6 +2,7 @@ package br.com.elysium.GestCare.controllers;
 
 import br.com.elysium.GestCare.model.Hospital;
 import br.com.elysium.GestCare.services.HospitalServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class HospitalController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Hospital update(@RequestBody Hospital hospital) {
+    public Hospital update(@Valid @RequestBody Hospital hospital) {
         return service.update(hospital);
     }
 

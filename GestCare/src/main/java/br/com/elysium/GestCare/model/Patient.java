@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -47,10 +49,11 @@ public class Patient implements Serializable {
     @Column(columnDefinition = "BIT(1)")
     private Boolean verified;
 
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Hospital> hospitals = new ArrayList<>();
+
     public Patient() {
     }
-
-    // Getters and Setters
 
     public long getId() {
         return id;
@@ -140,14 +143,22 @@ public class Patient implements Serializable {
         this.verified = verified;
     }
 
+    public List<Hospital> getHospitals() {
+        return hospitals;
+    }
+
+    public void setHospitals(List<Hospital> hospitals) {
+        this.hospitals = hospitals;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Patient patient)) return false;
-        return getId() == patient.getId() && Objects.equals(getName(), patient.getName()) && Objects.equals(getLastName(), patient.getLastName()) && Objects.equals(getCpf(), patient.getCpf()) && Objects.equals(getBirthDate(), patient.getBirthDate()) && Objects.equals(getEmail(), patient.getEmail()) && Objects.equals(getTelephone(), patient.getTelephone()) && Objects.equals(getPassword(), patient.getPassword()) && Objects.equals(getGender(), patient.getGender()) && Objects.equals(getJoinDate(), patient.getJoinDate()) && Objects.equals(getVerified(), patient.getVerified());
+        return getId() == patient.getId() && Objects.equals(getName(), patient.getName()) && Objects.equals(getLastName(), patient.getLastName()) && Objects.equals(getCpf(), patient.getCpf()) && Objects.equals(getBirthDate(), patient.getBirthDate()) && Objects.equals(getEmail(), patient.getEmail()) && Objects.equals(getTelephone(), patient.getTelephone()) && Objects.equals(getPassword(), patient.getPassword()) && Objects.equals(getGender(), patient.getGender()) && Objects.equals(getJoinDate(), patient.getJoinDate()) && Objects.equals(getVerified(), patient.getVerified()) && Objects.equals(getHospitals(), patient.getHospitals());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getLastName(), getCpf(), getBirthDate(), getEmail(), getTelephone(), getPassword(), getGender(), getJoinDate(), getVerified());
+        return Objects.hash(getId(), getName(), getLastName(), getCpf(), getBirthDate(), getEmail(), getTelephone(), getPassword(), getGender(), getJoinDate(), getVerified(), getHospitals());
     }
 }

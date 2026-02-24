@@ -1,6 +1,9 @@
 package br.com.elysium.GestCare.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,6 +17,7 @@ public class Hospital implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "O nome do hospital precisa estar preenchido")
     @Column(nullable = false, length = 150)
     private String name;
 
@@ -27,6 +31,7 @@ public class Hospital implements Serializable {
     private String adress;
 
     @ManyToOne
+    @NotNull(message = "O Hospital precisa estar vinculado a um paciente")
     @JoinColumn(name = "paciente_id")
     private Patient patient;
 
