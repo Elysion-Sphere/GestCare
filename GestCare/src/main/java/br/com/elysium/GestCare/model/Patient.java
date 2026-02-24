@@ -42,12 +42,14 @@ public class Patient implements Serializable {
     @Column(length = 20)
     private String telephone;
 
-
     @NotBlank(message = "A senha é obrigatória!")
     @Size(min = 6, message = "A senha deve possuir no mínimo 6 caracteres!")
     @Column(nullable = false, length = 255)
     private String password;
 
+    @NotNull(message = "O gênero é obrigatório!")
+    @Min(value = 1, message = "O gênero deve ser 1, 2 ou 3!")
+    @Max(value = 3, message = "O gênero deve ser 1, 2 ou 3!")
     @Column(nullable = false)
     private Integer gender;
 
