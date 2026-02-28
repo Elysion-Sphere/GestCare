@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GestCare - Acesse sua conta">
+    <title>Login - GestCare</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- ===== PAINEL ESQUERDO ===== -->
+        <div class="left-panel">
+            <div class="medical-illustration">
+                <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Círculo central com pulso -->
+                    <circle cx="140" cy="140" r="100" stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none" />
+                    <circle cx="140" cy="140" r="75" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" fill="none" />
+
+                    <!-- Coração estilizado -->
+                    <path
+                        d="M140 185 C140 185 100 155 100 130 C100 115 112 105 125 105 C133 105 138 110 140 115 C142 110 147 105 155 105 C168 105 180 115 180 130 C180 155 140 185 140 185Z"
+                        fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.8)" stroke-width="2" />
+
+                    <!-- Linha de batimento cardíaco -->
+                    <polyline
+                        points="50,140 90,140 105,140 115,110 125,170 135,120 145,160 155,135 165,140 200,140 230,140"
+                        stroke="rgba(255,255,255,0.9)" stroke-width="2.5" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <animate attributeName="stroke-dasharray" values="0 500;500 0" dur="3s"
+                            repeatCount="indefinite" />
+                    </polyline>
+
+                    <!-- Cruz médica no topo -->
+                    <g transform="translate(140, 65)">
+                        <rect x="-8" y="-20" width="16" height="40" rx="3" fill="rgba(255,255,255,0.85)" />
+                        <rect x="-20" y="-8" width="40" height="16" rx="3" fill="rgba(255,255,255,0.85)" />
+                    </g>
+
+                    <!-- Pequenos elementos decorativos -->
+                    <circle cx="60" cy="80" r="4" fill="rgba(255,255,255,0.3)">
+                        <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="220" cy="90" r="3" fill="rgba(255,255,255,0.25)">
+                        <animate attributeName="opacity" values="0.2;0.7;0.2" dur="5s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="200" cy="210" r="5" fill="rgba(255,255,255,0.2)">
+                        <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3.5s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="75" cy="200" r="3.5" fill="rgba(255,255,255,0.25)">
+                        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="4.5s" repeatCount="indefinite" />
+                    </circle>
+                </svg>
+            </div>
+
+            <div class="left-panel-text">
+                <h1>GestCare</h1>
+                <p>Gestão hospitalar inteligente para sua saúde</p>
+            </div>
+        </div>
+
+        <!-- ===== PAINEL DIREITO ===== -->
+        <div class="right-panel">
+            <canvas id="particles-canvas"></canvas>
+
+            <div class="form-card">
+                <!-- Logo -->
+                <div class="form-logo">
+                    <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="52" height="52" rx="14" fill="url(#logoGrad)" />
+                        <rect x="21" y="12" width="10" height="28" rx="3" fill="white" />
+                        <rect x="12" y="21" width="28" height="10" rx="3" fill="white" />
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0" y1="0" x2="52" y2="52">
+                                <stop offset="0%" stop-color="#0d47a1" />
+                                <stop offset="100%" stop-color="#42a5f5" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <h2>Bem-vindo</h2>
+                <p class="subtitle">Acesse sua conta para continuar</p>
+
+                <!-- Mensagem de erro/sucesso -->
+                <div id="login-message" class="message"></div>
+
+                <!-- Formulário -->
+                <form id="login-form" novalidate aria-label="Formulário de login">
+                    <div class="input-group">
+                        <label for="email">E-mail</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="2" />
+                                <path d="M22 4l-10 8L2 4" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Senha</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" name="password" placeholder="••••••••" required>
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Entrar</button>
+                </form>
+
+                <div class="form-footer">
+                    <a href="#">Esqueceu a senha?</a>
+                    <span style="margin: 0 8px; color: #ccc;">|</span>
+                    <a href="cadastro.html">Cadastrar paciente</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/particles.js" defer></script>
+    <script src="js/auth.js" defer></script>
+</body>
+
+</html>
