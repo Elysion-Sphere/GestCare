@@ -46,7 +46,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/patient/1",
+              "raw": "http://localhost:8080/patient/2",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -54,7 +54,33 @@
               "port": "8080",
               "path": [
                 "patient",
-                "1"
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "FindByPatientName",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/patient/search?name=ronoroa",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "patient",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "ronoroa"
+                }
               ]
             }
           },
@@ -67,7 +93,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"birthDate\": \"2002-07-13\",\r\n    \"cpf\": \"12345678992\",\r\n    \"email\": \"email4@gmail.com\",\r\n    \"gender\": 2,\r\n    \"joinDate\": \"2026-02-16T15:05:00\",\r\n    \"lastName\": \"Rapé\",\r\n    \"name\": \"Josue\",\r\n    \"password\": \"ElysionSphereSenha\",\r\n    \"telephone\": \"11999999999\",\r\n    \"verified\": true\r\n}",
+              "raw": "{\r\n    \"birthDate\": \"2002-07-13\",\r\n    \"cpf\": \"12345678997\",\r\n    \"email\": \"email3@gmail.com\",\r\n    \"gender\": 1,\r\n    \"lastName\": \"D.\",\r\n    \"name\": \"Luffy\",\r\n    \"password\": \"ElysionSphereSenha\",\r\n    \"telephone\": \"11999999999\",\r\n    \"verified\": true\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -95,7 +121,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"birthDate\": \"2002-07-13\",\r\n    \"cpf\": \"12345678900\",\r\n    \"email\": \"ElysionSphere1@gmail.com\",\r\n    \"gender\": 2,\r\n    \"id\": 1,\r\n    \"joinDate\": \"2026-02-16T15:05:00\",\r\n    \"lastName\": \"Ferreiraaaaa\",\r\n    \"name\": \"Breno\",\r\n    \"password\": \"ElysionSphereSenha\",\r\n    \"telephone\": \"11999999999\",\r\n    \"verified\": true\r\n}",
+              "raw": "{\r\n    \"birthDate\": \"2002-07-13\",\r\n    \"cpf\": \"12345678998\",\r\n    \"email\": \"onepiece3@gmail.com\",\r\n    \"gender\": 2,\r\n    \"id\": 3,\r\n    \"lastName\": \"Zoro\",\r\n    \"name\": \"Ronoroa\",\r\n    \"password\": \"ElysionSphereSenha\",\r\n    \"telephone\": \"11999999999\",\r\n    \"verified\": true\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -122,7 +148,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/patient/1",
+              "raw": "http://localhost:8080/patient/4",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -130,7 +156,7 @@
               "port": "8080",
               "path": [
                 "patient",
-                "1"
+                "4"
               ]
             }
           },
@@ -178,7 +204,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/hospital/1",
+              "raw": "http://localhost:8080/hospital/4",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -186,7 +212,37 @@
               "port": "8080",
               "path": [
                 "hospital",
-                "1"
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "FindByHospitalName",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/hospital/search?name=Onigashima&patientId=2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hospital",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Onigashima"
+                },
+                {
+                  "key": "patientId",
+                  "value": "2"
+                }
               ]
             }
           },
@@ -199,7 +255,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"adress\": \"Rua dos Gansos mansos\",\r\n    \"cnpj\": \"99999999999997\",\r\n    \"name\": \"Um nome qualquer\",\r\n    \"telephone\": \"11999999999\",\r\n    \"patient\": {\r\n        \"id\": 2\r\n    }\r\n}",
+              "raw": "{\r\n    \"adress\": \"Rua Wano\",\r\n    \"cnpj\": \"99999999999999\",\r\n    \"name\": \"Onigashima\",\r\n    \"telephone\": \"11999999999\",\r\n    \"patient\": {\r\n        \"id\": 2\r\n    }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -227,7 +283,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"adress\": \"Rua dos Gatos mansos\",\r\n    \"cnpj\": \"99999999999998\",\r\n    \"id\": 4,\r\n    \"name\": \"Ama Jubileu\",\r\n    \"telephone\": \"11999999999\",\r\n    \"patient\": {\r\n        \"id\": 1\r\n    }\r\n}",
+              "raw": "{\r\n    \"adress\": \"Rua dos Gatos mansos\",\r\n    \"cnpj\": \"99999999999998\",\r\n    \"id\": 3,\r\n    \"name\": \"Ama Jubileu\",\r\n    \"telephone\": \"11999999999\",\r\n    \"patient\": {\r\n        \"id\":2 \r\n    }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -254,7 +310,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/hospital/2",
+              "raw": "http://localhost:8080/hospital/3",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -262,7 +318,7 @@
               "port": "8080",
               "path": [
                 "hospital",
-                "2"
+                "3"
               ]
             }
           },
