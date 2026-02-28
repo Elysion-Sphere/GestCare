@@ -3,10 +3,19 @@ package br.com.elysium.GestCare.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@JsonPropertyOrder({
+        "id",
+        "name",
+        "cnpj",
+        "telephone",
+        "adress",
+        "patient"
+})
 @Entity
 @Table(name = "hospital")
 public class Hospital implements Serializable {
