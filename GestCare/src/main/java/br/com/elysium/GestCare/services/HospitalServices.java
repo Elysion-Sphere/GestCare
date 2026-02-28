@@ -33,6 +33,11 @@ public class HospitalServices {
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
     }
 
+    public List<Hospital> findByHospitalName(String name, Long patientId) {
+        return hospitalRepository
+                .findByNameContainingIgnoreCaseAndPatientId(name, patientId);
+    }
+
     @Transactional
     public Hospital create(Hospital hospital) {
         logger.info("Creating one Hospital!");

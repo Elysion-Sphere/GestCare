@@ -27,6 +27,13 @@ public class HospitalController {
         return service.findAll();
     }
 
+    @GetMapping("/search")
+    public List<Hospital> search(
+            @RequestParam String name,
+            @RequestParam Long patientId) {
+        return service.findByHospitalName(name, patientId);
+    }
+
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
