@@ -2,6 +2,7 @@ package br.com.elysium.GestCare.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -11,6 +12,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+
+@JsonPropertyOrder({
+        "id",
+        "name",
+        "lastName",
+        "cpf",
+        "birthDate",
+        "email",
+        "telephone",
+        "gender",
+        "joinDate",
+        "verified"
+})
 
 @Entity
 @Table(name = "patient")
