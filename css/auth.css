@@ -1,20 +1,10 @@
 /* ========================================
-   SISTEMA HOSPITALAR - ESTILOS GLOBAIS
+   GESTCARE - ESTILOS DE AUTENTICAÇÃO
+   Login, cadastro, painéis, formulários
    ======================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 html,
 body {
-    width: 100%;
-    height: 100%;
-    font-family: 'Inter', sans-serif;
     overflow: hidden;
 }
 
@@ -162,7 +152,6 @@ body {
     overflow-y: auto;
 }
 
-/* Scrollbar customizada */
 .form-card.cadastro-card::-webkit-scrollbar {
     width: 5px;
 }
@@ -188,7 +177,6 @@ body {
     }
 }
 
-/* --- Logo / Ícone do Card --- */
 .form-logo {
     display: flex;
     align-items: center;
@@ -296,7 +284,6 @@ body {
     font-weight: 300;
 }
 
-/* Layout de dois campos lado a lado */
 .input-row {
     display: flex;
     gap: 14px;
@@ -354,7 +341,7 @@ body {
 }
 
 /* ========================================
-   LINKS
+   LINKS E MENSAGENS
    ======================================== */
 
 .form-footer {
@@ -374,10 +361,6 @@ body {
     color: #0d47a1;
     text-decoration: underline;
 }
-
-/* ========================================
-   MENSAGENS DE ERRO / SUCESSO
-   ======================================== */
 
 .message {
     padding: 10px 14px;
@@ -418,7 +401,7 @@ body {
 }
 
 /* ========================================
-   RESPONSIVO
+   RESPONSIVO AUTH
    ======================================== */
 
 @media (max-width: 900px) {
