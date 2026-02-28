@@ -260,6 +260,10 @@ document.addEventListener('click', function (e) {
 
 // ======== INICIALIZAR ========
 document.addEventListener('DOMContentLoaded', function () {
-    populateHospitalSelects();
-    renderDocs();
+    try {
+        populateHospitalSelects();
+        renderDocs();
+    } catch (e) {
+        console.error('[GestCare] Erro na inicialização documentos:', e);
+    }
 });

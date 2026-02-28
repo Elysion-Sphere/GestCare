@@ -91,8 +91,12 @@ function setupTableInteractions() {
 // INICIALIZAÇÃO
 // =============================================
 
-document.addEventListener('DOMContentLoaded', () => {
-    updateGreeting();
-    new StatsAnimator();
-    setupTableInteractions();
+document.addEventListener('DOMContentLoaded', function () {
+    try {
+        updateGreeting();
+        new StatsAnimator();
+        setupTableInteractions();
+    } catch (e) {
+        console.error('[GestCare] Erro na inicialização stats:', e);
+    }
 });

@@ -62,33 +62,42 @@ function showMessage(elementId, text, type) {
 // =============================================
 
 function setupLoginForm() {
-    const form = safeGetElement('login-form');
-    if (!form) return;
+    try {
+        var form = safeGetElement('login-form');
+        if (!form) return;
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = safeGetValue('email');
-        const password = safeGetValue('password');
+        form.addEventListener('submit', function (e) {
+            try {
+                e.preventDefault();
+                var email = safeGetValue('email');
+                var password = safeGetValue('password');
 
-        if (!email || !password) {
-            showMessage('login-message', '⚠️ Preencha todos os campos.', 'error');
-            return;
-        }
+                if (!email || !password) {
+                    showMessage('login-message', '⚠️ Preencha todos os campos.', 'error');
+                    return;
+                }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            showMessage('login-message', '⚠️ Digite um e-mail válido.', 'error');
-            return;
-        }
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showMessage('login-message', '⚠️ Digite um e-mail válido.', 'error');
+                    return;
+                }
 
-        if (password.length < 6) {
-            showMessage('login-message', '⚠️ A senha deve ter pelo menos 6 caracteres.', 'error');
-            return;
-        }
+                if (password.length < 6) {
+                    showMessage('login-message', '⚠️ A senha deve ter pelo menos 6 caracteres.', 'error');
+                    return;
+                }
 
-        showMessage('login-message', '✅ Login realizado com sucesso!', 'success');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
-    });
+                showMessage('login-message', '✅ Login realizado com sucesso!', 'success');
+                setTimeout(function () { window.location.href = 'dashboard.html'; }, 1000);
+            } catch (err) {
+                console.error('[GestCare] Erro no login:', err);
+                showMessage('login-message', '⚠️ Erro inesperado. Tente novamente.', 'error');
+            }
+        });
+    } catch (e) {
+        console.error('[GestCare] Erro ao configurar login:', e);
+    }
 }
 
 // =============================================
@@ -96,82 +105,95 @@ function setupLoginForm() {
 // =============================================
 
 function setupCadastroForm() {
-    const form = safeGetElement('cadastro-form');
-    if (!form) return;
+    try {
+        var form = safeGetElement('cadastro-form');
+        if (!form) return;
 
-    const cpfInput = safeGetElement('cpf');
-    if (cpfInput) cpfInput.addEventListener('input', () => maskCPF(cpfInput));
+        var cpfInput = safeGetElement('cpf');
+        if (cpfInput) cpfInput.addEventListener('input', function () { maskCPF(cpfInput); });
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
+        form.addEventListener('submit', function (e) {
+            try {
+                e.preventDefault();
 
-        const nome = safeGetValue('nome');
-        const cpf = safeGetValue('cpf');
-        const nascimento = safeGetValue('nascimento');
-        const email = safeGetValue('email-cadastro');
-        const senha = safeGetValue('senha');
-        const confirmarSenha = safeGetValue('confirmar-senha');
-        const genero = safeGetValue('genero');
+                var nome = safeGetValue('nome');
+                var cpf = safeGetValue('cpf');
+                var nascimento = safeGetValue('nascimento');
+                var email = safeGetValue('email-cadastro');
+                var senha = safeGetValue('senha');
+                var confirmarSenha = safeGetValue('confirmar-senha');
+                var genero = safeGetValue('genero');
 
-        if (!nome || !cpf || !nascimento || !email || !senha || !confirmarSenha || !genero) {
-            showMessage('cadastro-message', '⚠️ Preencha todos os campos.', 'error');
-            return;
-        }
+                if (!nome || !cpf || !nascimento || !email || !senha || !confirmarSenha || !genero) {
+                    showMessage('cadastro-message', '⚠️ Preencha todos os campos.', 'error');
+                    return;
+                }
 
-        if (nome.split(/\s+/).filter(Boolean).length < 2) {
-            showMessage('cadastro-message', '⚠️ Informe o nome completo (nome e sobrenome).', 'error');
-            return;
-        }
+                if (nome.split(/\s+/).filter(Boolean).length < 2) {
+                    showMessage('cadastro-message', '⚠️ Informe o nome completo (nome e sobrenome).', 'error');
+                    return;
+                }
 
-        const cpfDigits = cpf.replace(/\D/g, '');
-        if (cpfDigits.length !== 11) {
-            showMessage('cadastro-message', '⚠️ CPF deve conter 11 dígitos.', 'error');
-            return;
-        }
-        if (/^(\d)\1{10}$/.test(cpfDigits)) {
-            showMessage('cadastro-message', '⚠️ CPF inválido.', 'error');
-            return;
-        }
+                var cpfDigits = cpf.replace(/\D/g, '');
+                if (cpfDigits.length !== 11) {
+                    showMessage('cadastro-message', '⚠️ CPF deve conter 11 dígitos.', 'error');
+                    return;
+                }
+                if (/^(\d)\1{10}$/.test(cpfDigits)) {
+                    showMessage('cadastro-message', '⚠️ CPF inválido.', 'error');
+                    return;
+                }
 
-        const birthDate = new Date(nascimento);
-        const today = new Date();
-        if (isNaN(birthDate.getTime()) || birthDate > today) {
-            showMessage('cadastro-message', '⚠️ Data de nascimento inválida.', 'error');
-            return;
-        }
+                var birthDate = new Date(nascimento);
+                var today = new Date();
+                if (isNaN(birthDate.getTime()) || birthDate > today) {
+                    showMessage('cadastro-message', '⚠️ Data de nascimento inválida.', 'error');
+                    return;
+                }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            showMessage('cadastro-message', '⚠️ Digite um e-mail válido.', 'error');
-            return;
-        }
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showMessage('cadastro-message', '⚠️ Digite um e-mail válido.', 'error');
+                    return;
+                }
 
-        if (senha.length < 6) {
-            showMessage('cadastro-message', '⚠️ A senha deve ter pelo menos 6 caracteres.', 'error');
-            return;
-        }
+                if (senha.length < 6) {
+                    showMessage('cadastro-message', '⚠️ A senha deve ter pelo menos 6 caracteres.', 'error');
+                    return;
+                }
 
-        if (senha !== confirmarSenha) {
-            showMessage('cadastro-message', '⚠️ As senhas não coincidem.', 'error');
-            return;
-        }
+                if (senha !== confirmarSenha) {
+                    showMessage('cadastro-message', '⚠️ As senhas não coincidem.', 'error');
+                    return;
+                }
 
-        if (!['1', '2', '3'].includes(genero)) {
-            showMessage('cadastro-message', '⚠️ Selecione um gênero válido.', 'error');
-            return;
-        }
+                if (!['1', '2', '3'].includes(genero)) {
+                    showMessage('cadastro-message', '⚠️ Selecione um gênero válido.', 'error');
+                    return;
+                }
 
-        showMessage('cadastro-message', '✅ Cadastro realizado com sucesso! Redirecionando...', 'success');
-        form.reset();
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
-    });
+                showMessage('cadastro-message', '✅ Cadastro realizado com sucesso! Redirecionando...', 'success');
+                form.reset();
+                setTimeout(function () { window.location.href = 'dashboard.html'; }, 1500);
+            } catch (err) {
+                console.error('[GestCare] Erro no cadastro:', err);
+                showMessage('cadastro-message', '⚠️ Erro inesperado. Tente novamente.', 'error');
+            }
+        });
+    } catch (e) {
+        console.error('[GestCare] Erro ao configurar cadastro:', e);
+    }
 }
 
 // =============================================
 // INICIALIZAÇÃO
 // =============================================
 
-document.addEventListener('DOMContentLoaded', () => {
-    setupLoginForm();
-    setupCadastroForm();
+document.addEventListener('DOMContentLoaded', function () {
+    try {
+        setupLoginForm();
+        setupCadastroForm();
+    } catch (e) {
+        console.error('[GestCare] Erro na inicialização auth:', e);
+    }
 });
