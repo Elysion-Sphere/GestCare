@@ -43,6 +43,7 @@ public class Patient implements Serializable {
     @Column(length = 20)
     private String telephone;
 
+    @JsonIgnore
     @NotBlank(message = "A senha é obrigatória!")
     @Size(min = 6, message = "A senha deve possuir no mínimo 6 caracteres!")
     @Column(nullable = false, length = 255)
