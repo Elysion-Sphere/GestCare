@@ -1,6 +1,7 @@
 package br.com.elysium.GestCare.services;
 
 import br.com.elysium.GestCare.exception.ResourceNotFoundException;
+import br.com.elysium.GestCare.model.Hospital;
 import br.com.elysium.GestCare.model.Patient;
 import br.com.elysium.GestCare.repositories.PatientRepository;
 import jakarta.transaction.Transactional;
@@ -56,6 +57,11 @@ public class PatientServices {
 
         return patientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+    }
+
+    public List<Patient> findByPatientName(String name) {
+        return patientRepository
+                .findByName(name);
     }
 
     @Transactional

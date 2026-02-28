@@ -1,5 +1,6 @@
 package br.com.elysium.GestCare.controllers;
 
+import br.com.elysium.GestCare.model.Hospital;
 import br.com.elysium.GestCare.model.Patient;
 import br.com.elysium.GestCare.services.PatientServices;
 import jakarta.validation.Valid;
@@ -33,6 +34,12 @@ public class PatientController {
     )
     public List<Patient> findAll(){
         return service.findAll();
+    }
+
+    @GetMapping("/search")
+    public List<Patient> search(
+            @RequestParam String name) {
+        return service.findByPatientName(name);
     }
 
     @PostMapping(
