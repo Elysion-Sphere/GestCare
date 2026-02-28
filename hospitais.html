@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GestCare - Meus Hospitais">
+    <title>Hospitais - GestCare</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+</head>
+
+<body>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="10" fill="url(#sideLogoGrad)" />
+                <rect x="16" y="9" width="8" height="22" rx="2.5" fill="white" />
+                <rect x="9" y="16" width="22" height="8" rx="2.5" fill="white" />
+                <defs>
+                    <linearGradient id="sideLogoGrad" x1="0" y1="0" x2="40" y2="40">
+                        <stop offset="0%" stop-color="#42a5f5" />
+                        <stop offset="100%" stop-color="#1976d2" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="logo-text">GestCare</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                </svg><span>Dashboard</span></a>
+            <a href="hospitais.html" class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 21h18" />
+                    <path d="M5 21V7l8-4v18" />
+                    <path d="M19 21V11l-6-4" />
+                    <path d="M9 9h1" />
+                    <path d="M9 13h1" />
+                    <path d="M9 17h1" />
+                </svg><span>Hospitais</span></a>
+            <a href="documentos.html" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                </svg><span>Documentos</span></a>
+            <a href="perfil.html" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg><span>Perfil</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="index.html" class="nav-item logout-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg><span>Sair</span></a>
+        </div>
+    </aside>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menu-toggle" aria-label="Alternar menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+                <h2 style="margin:0; font-size:1.3rem; color:#1a2332;">🏥 Meus Hospitais</h2>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <div class="user-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg></div>
+                    <div class="user-info"><span class="user-name">André Silva</span><span
+                            class="user-role">Paciente</span></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="page-actions">
+            <div class="filters">
+                <div class="header-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input type="text" id="busca-hospital" placeholder="Buscar hospital por nome..."
+                        oninput="searchHospitais()">
+                </div>
+            </div>
+            <button class="btn-primary-action" id="btn-novo-hospital" onclick="openModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Novo Hospital
+            </button>
+        </section>
+
+        <!-- Grid de Cards dos Hospitais -->
+        <section class="cards-grid" id="hospitais-grid">
+            <!-- Os cards são gerados via JS -->
+        </section>
+
+        <!-- Mensagem vazia -->
+        <div class="empty-state" id="empty-state" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#90a4ae" stroke-width="1.5" width="64" height="64">
+                <path d="M3 21h18" />
+                <path d="M5 21V7l8-4v18" />
+                <path d="M19 21V11l-6-4" />
+            </svg>
+            <h3>Nenhum hospital cadastrado</h3>
+            <p>Clique em "Novo Hospital" para adicionar o primeiro.</p>
+        </div>
+    </main>
+
+    <!-- ===== MODAL ===== -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Novo Hospital</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="hospital-form" onsubmit="saveHospital(event)">
+                <input type="hidden" id="hospital-id" value="">
+                <div class="modal-body">
+                    <div class="input-group">
+                        <label for="hospital-nome">Nome do Hospital *</label>
+                        <input type="text" id="hospital-nome" placeholder="Ex: Hospital São Lucas" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="hospital-telefone">Telefone</label>
+                        <input type="text" id="hospital-telefone" placeholder="(00) 00000-0000" maxlength="15">
+                    </div>
+                    <div class="input-group">
+                        <label for="hospital-endereco">Endereço</label>
+                        <input type="text" id="hospital-endereco" placeholder="Rua, número, bairro, cidade">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ======== DADOS SIMULADOS ========
+        let hospitais = [
+            { id: 1, nome: 'Hospital São Lucas', telefone: '(11) 3456-7890', endereco: 'Av. Paulista, 1000 - São Paulo' },
+            { id: 2, nome: 'Clínica Santa Maria', telefone: '(11) 2345-6789', endereco: 'Rua Augusta, 500 - São Paulo' },
+            { id: 3, nome: 'Lab Central', telefone: '(11) 9876-5432', endereco: 'Rua Oscar Freire, 200 - São Paulo' },
+        ];
+        let nextId = 4;
+
+        // ======== RENDERIZAR ========
+        function renderHospitais() {
+            const grid = document.getElementById('hospitais-grid');
+            const empty = document.getElementById('empty-state');
+            if (!grid) return;
+
+            if (hospitais.length === 0) {
+                grid.innerHTML = '';
+                if (empty) empty.style.display = 'flex';
+                return;
+            }
+            if (empty) empty.style.display = 'none';
+
+            grid.innerHTML = hospitais.map(h => `
+            <div class="hospital-card">
+                <div class="hospital-card-header">
+                    <div class="hospital-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+                    </div>
+                    <h3>${h.nome}</h3>
+                </div>
+                <div class="hospital-card-body">
+                    ${h.telefone ? `<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ${h.telefone}</p>` : ''}
+                    ${h.endereco ? `<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ${h.endereco}</p>` : ''}
+                </div>
+                <div class="hospital-card-actions">
+                    <button class="btn-edit" onclick="editHospital(${h.id})">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        Editar
+                    </button>
+                    <button class="btn-delete" onclick="deleteHospital(${h.id})">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        Excluir
+                    </button>
+                </div>
+            </div>
+        `).join('');
+        }
+
+        // ======== MODAL ========
+        function openModal(id) {
+            const overlay = document.getElementById('modal-overlay');
+            const title = document.getElementById('modal-title');
+            const form = document.getElementById('hospital-form');
+            overlay.classList.add('show');
+
+            if (id) {
+                const h = hospitais.find(h => h.id === id);
+                if (h) {
+                    title.textContent = 'Editar Hospital';
+                    document.getElementById('hospital-id').value = h.id;
+                    document.getElementById('hospital-nome').value = h.nome;
+                    document.getElementById('hospital-telefone').value = h.telefone || '';
+                    document.getElementById('hospital-endereco').value = h.endereco || '';
+                }
+            } else {
+                title.textContent = 'Novo Hospital';
+                form.reset();
+                document.getElementById('hospital-id').value = '';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').classList.remove('show');
+        }
+
+        function saveHospital(e) {
+            e.preventDefault();
+            const id = document.getElementById('hospital-id').value;
+            const nome = document.getElementById('hospital-nome').value.trim();
+            const telefone = document.getElementById('hospital-telefone').value.trim();
+            const endereco = document.getElementById('hospital-endereco').value.trim();
+
+            if (!nome) { alert('Nome é obrigatório!'); return; }
+
+            if (id) {
+                const h = hospitais.find(h => h.id === parseInt(id));
+                if (h) { h.nome = nome; h.telefone = telefone; h.endereco = endereco; }
+            } else {
+                hospitais.push({ id: nextId++, nome, telefone, endereco });
+            }
+
+            closeModal();
+            renderHospitais();
+        }
+
+        function editHospital(id) { openModal(id); }
+
+        function deleteHospital(id) {
+            const h = hospitais.find(h => h.id === id);
+            if (!h) return;
+            if (confirm(`Tem certeza que deseja excluir "${h.nome}"? Todos os documentos vinculados serão perdidos.`)) {
+                hospitais = hospitais.filter(h => h.id !== id);
+                renderHospitais();
+            }
+        }
+
+        // ======== SIDEBAR TOGGLE ========
+        document.getElementById('menu-toggle')?.addEventListener('click', () => {
+            document.getElementById('sidebar')?.classList.toggle('open');
+        });
+
+        // ======== BUSCA POR NOME ========
+        function searchHospitais() {
+            const busca = document.getElementById('busca-hospital').value.toLowerCase().trim();
+            const grid = document.getElementById('hospitais-grid');
+            const empty = document.getElementById('empty-state');
+
+            const filtered = busca
+                ? hospitais.filter(h => h.nome.toLowerCase().includes(busca))
+                : hospitais;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                if (empty) {
+                    empty.style.display = 'flex';
+                    empty.querySelector('h3').textContent = busca ? 'Nenhum hospital encontrado' : 'Nenhum hospital cadastrado';
+                    empty.querySelector('p').textContent = busca ? `Nenhum resultado para "${busca}"` : 'Clique em "Novo Hospital" para adicionar o primeiro.';
+                }
+                return;
+            }
+            if (empty) empty.style.display = 'none';
+
+            grid.innerHTML = filtered.map(h => `
+            <div class="hospital-card">
+                <div class="hospital-card-header">
+                    <div class="hospital-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+                    </div>
+                    <h3>${h.nome}</h3>
+                </div>
+                <div class="hospital-card-body">
+                    ${h.telefone ? `<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ${h.telefone}</p>` : ''}
+                    ${h.endereco ? `<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ${h.endereco}</p>` : ''}
+                </div>
+                <div class="hospital-card-actions">
+                    <button class="btn-edit" onclick="editHospital(${h.id})">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        Editar
+                    </button>
+                    <button class="btn-delete" onclick="deleteHospital(${h.id})">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        Excluir
+                    </button>
+                </div>
+            </div>
+            `).join('');
+        }
+
+        // ======== INICIALIZAR ========
+        document.addEventListener('DOMContentLoaded', renderHospitais);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GestCare - Painel de Documentos Médicos">
+    <title>Dashboard - GestCare</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+</head>
+
+<body>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="10" fill="url(#sideLogoGrad)" />
+                <rect x="16" y="9" width="8" height="22" rx="2.5" fill="white" />
+                <rect x="9" y="16" width="22" height="8" rx="2.5" fill="white" />
+                <defs>
+                    <linearGradient id="sideLogoGrad" x1="0" y1="0" x2="40" y2="40">
+                        <stop offset="0%" stop-color="#42a5f5" />
+                        <stop offset="100%" stop-color="#1976d2" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="logo-text">GestCare</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                </svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="hospitais.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 21h18" />
+                    <path d="M5 21V7l8-4v18" />
+                    <path d="M19 21V11l-6-4" />
+                    <path d="M9 9h1" />
+                    <path d="M9 13h1" />
+                    <path d="M9 17h1" />
+                </svg>
+                <span>Hospitais</span>
+            </a>
+            <a href="documentos.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                </svg>
+                <span>Documentos</span>
+            </a>
+            <a href="perfil.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span>Perfil</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="index.html" class="nav-item logout-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                <span>Sair</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <header class="top-header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menu-toggle" aria-label="Alternar menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+                <div class="header-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input type="text" placeholder="Buscar documento, hospital..." id="search-input">
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="header-btn notification-btn" id="notification-btn" aria-label="Notificações">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                    <span class="notification-badge">2</span>
+                </button>
+                <div class="user-profile" id="user-profile">
+                    <div class="user-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">André Silva</span>
+                        <span class="user-role">Paciente</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Boas-vindas -->
+        <section class="welcome-section">
+            <div class="welcome-text">
+                <h1>Boa noite, André! 👋</h1>
+                <p>Seus documentos médicos organizados em um só lugar.</p>
+            </div>
+            <canvas id="dna-canvas" class="dna-canvas"></canvas>
+        </section>
+
+        <!-- Cards de Estatísticas -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon hospitais-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M3 21h18" />
+                        <path d="M5 21V7l8-4v18" />
+                        <path d="M19 21V11l-6-4" />
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">Meus Hospitais</span>
+                    <span class="stat-value" id="stat-hospitais-val">3</span>
+                </div>
+                <div class="stat-trend neutral">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="1" y1="12" x2="23" y2="12" />
+                    </svg>
+                    <span>Ativos</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon documentos-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">Total Documentos</span>
+                    <span class="stat-value" id="stat-documentos-val">18</span>
+                </div>
+                <div class="stat-trend up">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                    </svg>
+                    <span>+3 este mês</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon exames-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">Exames</span>
+                    <span class="stat-value" id="stat-exames-val">7</span>
+                </div>
+                <div class="stat-trend up">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                    </svg>
+                    <span>+1 novo</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon receitas-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                        <rect x="8" y="2" width="8" height="4" rx="1" />
+                        <line x1="9" y1="12" x2="15" y2="12" />
+                        <line x1="9" y1="16" x2="13" y2="16" />
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">Receitas</span>
+                    <span class="stat-value" id="stat-receitas-val">4</span>
+                </div>
+                <div class="stat-trend neutral">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="1" y1="12" x2="23" y2="12" />
+                    </svg>
+                    <span>Estável</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabela de Documentos Recentes -->
+        <section class="agenda-section">
+            <div class="section-header">
+                <h2>📄 Documentos Recentes</h2>
+                <div class="section-actions">
+                    <button class="btn-outline" onclick="window.location.href='documentos.html'">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Novo Documento
+                    </button>
+                    <button class="btn-ghost" onclick="window.location.href='documentos.html'">Ver todos →</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="agenda-table" id="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tipo</th>
+                            <th>Hospital</th>
+                            <th>Descrição</th>
+                            <th>Arquivo</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="time-cell">27/02/2026</td>
+                            <td><span class="doc-type-badge exame">Exame</span></td>
+                            <td>Hospital São Lucas</td>
+                            <td>Hemograma completo</td>
+                            <td><span class="file-badge pdf">PDF</span></td>
+                            <td>
+                                <button class="action-btn" title="Ver documento">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="time-cell">25/02/2026</td>
+                            <td><span class="doc-type-badge consulta">Consulta</span></td>
+                            <td>Clínica Santa Maria</td>
+                            <td>Consulta cardiológica — acompanhamento</td>
+                            <td><span class="file-badge img">JPG</span></td>
+                            <td>
+                                <button class="action-btn" title="Ver documento">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="time-cell">20/02/2026</td>
+                            <td><span class="doc-type-badge receita">Receita</span></td>
+                            <td>Hospital São Lucas</td>
+                            <td>Receita — Losartana 50mg</td>
+                            <td><span class="file-badge pdf">PDF</span></td>
+                            <td>
+                                <button class="action-btn" title="Ver documento">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="time-cell">15/02/2026</td>
+                            <td><span class="doc-type-badge laudo">Laudo</span></td>
+                            <td>Lab Central</td>
+                            <td>Laudo de ressonância magnética</td>
+                            <td><span class="file-badge pdf">PDF</span></td>
+                            <td>
+                                <button class="action-btn" title="Ver documento">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="time-cell">10/02/2026</td>
+                            <td><span class="doc-type-badge exame">Exame</span></td>
+                            <td>Clínica Santa Maria</td>
+                            <td>Eletrocardiograma</td>
+                            <td><span class="file-badge img">PNG</span></td>
+                            <td>
+                                <button class="action-btn" title="Ver documento">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

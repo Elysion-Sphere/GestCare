@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GestCare - Meus Documentos Médicos">
+    <title>Documentos - GestCare</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+</head>
+
+<body>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="10" fill="url(#sideLogoGrad)" />
+                <rect x="16" y="9" width="8" height="22" rx="2.5" fill="white" />
+                <rect x="9" y="16" width="22" height="8" rx="2.5" fill="white" />
+                <defs>
+                    <linearGradient id="sideLogoGrad" x1="0" y1="0" x2="40" y2="40">
+                        <stop offset="0%" stop-color="#42a5f5" />
+                        <stop offset="100%" stop-color="#1976d2" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="logo-text">GestCare</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                </svg><span>Dashboard</span></a>
+            <a href="hospitais.html" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M3 21h18" />
+                    <path d="M5 21V7l8-4v18" />
+                    <path d="M19 21V11l-6-4" />
+                </svg><span>Hospitais</span></a>
+            <a href="documentos.html" class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                </svg><span>Documentos</span></a>
+            <a href="perfil.html" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg><span>Perfil</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="index.html" class="nav-item logout-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg><span>Sair</span></a>
+        </div>
+    </aside>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menu-toggle" aria-label="Alternar menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+                <h2 style="margin:0; font-size:1.3rem; color:#1a2332;">📄 Meus Documentos</h2>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <div class="user-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg></div>
+                    <div class="user-info"><span class="user-name">André Silva</span><span
+                            class="user-role">Paciente</span></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Filtros + Botão -->
+        <section class="page-actions">
+            <div class="filters">
+                <select id="filter-tipo" onchange="applyFilters()">
+                    <option value="">Todos os tipos</option>
+                    <option value="consulta">Consulta</option>
+                    <option value="laudo">Laudo</option>
+                    <option value="exame">Exame</option>
+                    <option value="receita">Receita</option>
+                </select>
+                <select id="filter-hospital" onchange="applyFilters()">
+                    <option value="">Todos os hospitais</option>
+                </select>
+                <input type="text" id="filter-busca" placeholder="Buscar descrição..." oninput="applyFilters()">
+            </div>
+            <button class="btn-primary-action" onclick="openDocModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Novo Documento
+            </button>
+        </section>
+
+        <!-- Tabela de Documentos -->
+        <section class="agenda-section">
+            <div class="table-container">
+                <table class="agenda-table" id="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tipo</th>
+                            <th>Hospital</th>
+                            <th>Descrição</th>
+                            <th>Arquivo</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="docs-tbody"></tbody>
+                </table>
+            </div>
+            <div class="empty-state" id="empty-state" style="display:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#90a4ae" stroke-width="1.5" width="64" height="64">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                </svg>
+                <h3>Nenhum documento encontrado</h3>
+                <p>Clique em "Novo Documento" para adicionar.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== MODAL DOCUMENTO ===== -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h3 id="modal-title">Novo Documento</h3>
+                <button class="modal-close" onclick="closeDocModal()">&times;</button>
+            </div>
+            <form id="doc-form" onsubmit="saveDoc(event)">
+                <input type="hidden" id="doc-id" value="">
+                <div class="modal-body">
+                    <div class="input-row-modal">
+                        <div class="input-group">
+                            <label for="doc-hospital">Hospital *</label>
+                            <select id="doc-hospital" required>
+                                <option value="" disabled selected>Selecione o hospital</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="doc-tipo">Tipo *</label>
+                            <select id="doc-tipo" required>
+                                <option value="" disabled selected>Selecione o tipo</option>
+                                <option value="consulta">Consulta</option>
+                                <option value="laudo">Laudo</option>
+                                <option value="exame">Exame</option>
+                                <option value="receita">Receita</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-row-modal">
+                        <div class="input-group">
+                            <label for="doc-data">Data *</label>
+                            <input type="date" id="doc-data" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="doc-descricao">Descrição</label>
+                            <input type="text" id="doc-descricao" placeholder="Ex: Hemograma completo">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="doc-arquivo">Arquivo (PDF, JPG ou PNG) *</label>
+                        <div class="upload-area" id="upload-area">
+                            <input type="file" id="doc-arquivo" accept=".pdf,.jpg,.jpeg,.png"
+                                onchange="handleFileSelect(event)">
+                            <div class="upload-placeholder" id="upload-placeholder">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#90a4ae" stroke-width="2" width="40"
+                                    height="40">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="17 8 12 3 7 8" />
+                                    <line x1="12" y1="3" x2="12" y2="15" />
+                                </svg>
+                                <p>Arraste ou clique para selecionar</p>
+                                <span>PDF, JPG, PNG (máx. 10MB)</span>
+                            </div>
+                            <div class="upload-preview" id="upload-preview" style="display:none;">
+                                <span id="file-name"></span>
+                                <button type="button" class="btn-remove-file" onclick="removeFile()">✕</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeDocModal()">Cancelar</button>
+                    <button type="submit" class="btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ======== DADOS SIMULADOS ========
+        const hospitais = [
+            { id: 1, nome: 'Hospital São Lucas' },
+            { id: 2, nome: 'Clínica Santa Maria' },
+            { id: 3, nome: 'Lab Central' },
+        ];
+
+        let documentos = [
+            { id: 1, hospitalId: 1, tipo: 'exame', data: '2026-02-27', descricao: 'Hemograma completo', arquivo: 'hemograma.pdf', ext: 'pdf' },
+            { id: 2, hospitalId: 2, tipo: 'consulta', data: '2026-02-25', descricao: 'Consulta cardiológica — acompanhamento', arquivo: 'consulta_cardio.jpg', ext: 'jpg' },
+            { id: 3, hospitalId: 1, tipo: 'receita', data: '2026-02-20', descricao: 'Receita — Losartana 50mg', arquivo: 'receita_losartana.pdf', ext: 'pdf' },
+            { id: 4, hospitalId: 3, tipo: 'laudo', data: '2026-02-15', descricao: 'Laudo de ressonância magnética', arquivo: 'laudo_rm.pdf', ext: 'pdf' },
+            { id: 5, hospitalId: 2, tipo: 'exame', data: '2026-02-10', descricao: 'Eletrocardiograma', arquivo: 'ecg.png', ext: 'png' },
+            { id: 6, hospitalId: 1, tipo: 'consulta', data: '2026-01-28', descricao: 'Retorno clínico geral', arquivo: 'retorno_clinico.pdf', ext: 'pdf' },
+            { id: 7, hospitalId: 3, tipo: 'exame', data: '2026-01-15', descricao: 'Glicemia em jejum', arquivo: 'glicemia.pdf', ext: 'pdf' },
+        ];
+        let nextDocId = 8;
+        let selectedFile = null;
+
+        // ======== UTILS ========
+        function getHospitalName(id) {
+            const h = hospitais.find(h => h.id === id);
+            return h ? h.nome : 'Desconhecido';
+        }
+
+        function formatDate(dateStr) {
+            const [y, m, d] = dateStr.split('-');
+            return `${d}/${m}/${y}`;
+        }
+
+        function getTypeClass(tipo) {
+            return tipo;
+        }
+
+        function getFileClass(ext) {
+            return ext === 'pdf' ? 'pdf' : 'img';
+        }
+
+        // ======== POPULAR SELECTS ========
+        function populateHospitalSelects() {
+            const selects = [document.getElementById('filter-hospital'), document.getElementById('doc-hospital')];
+            selects.forEach(sel => {
+                if (!sel) return;
+                const value = sel.value;
+                const firstOption = sel.options[0];
+                sel.innerHTML = '';
+                sel.appendChild(firstOption);
+                hospitais.forEach(h => {
+                    const opt = document.createElement('option');
+                    opt.value = h.id;
+                    opt.textContent = h.nome;
+                    sel.appendChild(opt);
+                });
+                sel.value = value;
+            });
+        }
+
+        // ======== RENDERIZAR ========
+        function renderDocs(list) {
+            const tbody = document.getElementById('docs-tbody');
+            const empty = document.getElementById('empty-state');
+            if (!tbody) return;
+
+            const docs = list || documentos;
+
+            if (docs.length === 0) {
+                tbody.innerHTML = '';
+                if (empty) empty.style.display = 'flex';
+                return;
+            }
+            if (empty) empty.style.display = 'none';
+
+            tbody.innerHTML = docs.map(d => `
+            <tr>
+                <td class="time-cell">${formatDate(d.data)}</td>
+                <td><span class="doc-type-badge ${getTypeClass(d.tipo)}">${d.tipo}</span></td>
+                <td>${getHospitalName(d.hospitalId)}</td>
+                <td>${d.descricao || '—'}</td>
+                <td><span class="file-badge ${getFileClass(d.ext)}">${d.ext.toUpperCase()}</span></td>
+                <td class="actions-cell">
+                    <button class="action-btn" title="Editar" onclick="editDoc(${d.id})">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="action-btn btn-action-delete" title="Excluir" onclick="deleteDoc(${d.id})">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+        }
+
+        // ======== FILTROS ========
+        function applyFilters() {
+            const tipo = document.getElementById('filter-tipo').value;
+            const hospitalId = document.getElementById('filter-hospital').value;
+            const busca = document.getElementById('filter-busca').value.toLowerCase();
+
+            let filtered = documentos;
+            if (tipo) filtered = filtered.filter(d => d.tipo === tipo);
+            if (hospitalId) filtered = filtered.filter(d => d.hospitalId === parseInt(hospitalId));
+            if (busca) filtered = filtered.filter(d => (d.descricao || '').toLowerCase().includes(busca));
+
+            renderDocs(filtered);
+        }
+
+        // ======== MODAL ========
+        function openDocModal(id) {
+            document.getElementById('modal-overlay').classList.add('show');
+            const title = document.getElementById('modal-title');
+            const form = document.getElementById('doc-form');
+            selectedFile = null;
+            document.getElementById('upload-preview').style.display = 'none';
+            document.getElementById('upload-placeholder').style.display = 'flex';
+
+            if (id) {
+                const d = documentos.find(d => d.id === id);
+                if (d) {
+                    title.textContent = 'Editar Documento';
+                    document.getElementById('doc-id').value = d.id;
+                    document.getElementById('doc-hospital').value = d.hospitalId;
+                    document.getElementById('doc-tipo').value = d.tipo;
+                    document.getElementById('doc-data').value = d.data;
+                    document.getElementById('doc-descricao').value = d.descricao || '';
+                    document.getElementById('file-name').textContent = d.arquivo;
+                    document.getElementById('upload-preview').style.display = 'flex';
+                    document.getElementById('upload-placeholder').style.display = 'none';
+                }
+            } else {
+                title.textContent = 'Novo Documento';
+                form.reset();
+                document.getElementById('doc-id').value = '';
+            }
+        }
+
+        function closeDocModal() {
+            document.getElementById('modal-overlay').classList.remove('show');
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+            if (!validTypes.includes(file.type)) {
+                alert('Formato inválido! Aceitos: PDF, JPG, PNG.');
+                e.target.value = '';
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                alert('Arquivo muito grande! Máximo 10MB.');
+                e.target.value = '';
+                return;
+            }
+
+            selectedFile = file;
+            document.getElementById('file-name').textContent = file.name;
+            document.getElementById('upload-preview').style.display = 'flex';
+            document.getElementById('upload-placeholder').style.display = 'none';
+        }
+
+        function removeFile() {
+            selectedFile = null;
+            document.getElementById('doc-arquivo').value = '';
+            document.getElementById('upload-preview').style.display = 'none';
+            document.getElementById('upload-placeholder').style.display = 'flex';
+        }
+
+        function saveDoc(e) {
+            e.preventDefault();
+            const id = document.getElementById('doc-id').value;
+            const hospitalId = parseInt(document.getElementById('doc-hospital').value);
+            const tipo = document.getElementById('doc-tipo').value;
+            const data = document.getElementById('doc-data').value;
+            const descricao = document.getElementById('doc-descricao').value.trim();
+
+            if (!hospitalId || !tipo || !data) { alert('Preencha os campos obrigatórios!'); return; }
+
+            // Data não pode ser futura (RN15)
+            if (new Date(data) > new Date()) {
+                alert('A data do documento não pode ser futura.');
+                return;
+            }
+
+            if (id) {
+                const d = documentos.find(d => d.id === parseInt(id));
+                if (d) {
+                    d.hospitalId = hospitalId;
+                    d.tipo = tipo;
+                    d.data = data;
+                    d.descricao = descricao;
+                    if (selectedFile) {
+                        d.arquivo = selectedFile.name;
+                        d.ext = selectedFile.name.split('.').pop().toLowerCase();
+                    }
+                }
+            } else {
+                if (!selectedFile) { alert('Selecione um arquivo!'); return; }
+                const ext = selectedFile.name.split('.').pop().toLowerCase();
+                documentos.push({ id: nextDocId++, hospitalId, tipo, data, descricao, arquivo: selectedFile.name, ext });
+            }
+
+            closeDocModal();
+            renderDocs();
+        }
+
+        function editDoc(id) { openDocModal(id); }
+
+        function deleteDoc(id) {
+            const d = documentos.find(d => d.id === id);
+            if (!d) return;
+            if (confirm(`Excluir "${d.descricao || d.arquivo}"?`)) {
+                documentos = documentos.filter(d => d.id !== id);
+                renderDocs();
+            }
+        }
+
+        // ======== SIDEBAR ========
+        document.getElementById('menu-toggle')?.addEventListener('click', () => {
+            document.getElementById('sidebar')?.classList.toggle('open');
+        });
+
+        // ======== INIT ========
+        document.addEventListener('DOMContentLoaded', () => {
+            populateHospitalSelects();
+            renderDocs();
+        });
+    </script>
+</body>
+
+</html>
