@@ -249,6 +249,47 @@
           "response": []
         },
         {
+          "name": "FindAllByPatientId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/hospital/patient/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hospital",
+                "patient",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/hospital/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hospital",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "Create",
           "request": {
             "method": "POST",
@@ -299,26 +340,6 @@
               "port": "8080",
               "path": [
                 "hospital"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Delete",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/hospital/3",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "hospital",
-                "3"
               ]
             }
           },
