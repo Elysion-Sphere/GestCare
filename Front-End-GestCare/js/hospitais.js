@@ -6,11 +6,11 @@
 
 // ======== DADOS SIMULADOS ========
 var hospitais = [
-    { id: 1, nome: 'Hospital São Lucas', cnpj: '12.345.678/0001-90', telefone: '(11) 3456-7890', endereco: 'Av. Paulista, 1000 - São Paulo' },
-    { id: 2, nome: 'Clínica Santa Maria', cnpj: '98.765.432/0001-10', telefone: '(11) 2345-6789', endereco: 'Rua Augusta, 500 - São Paulo' },
-    { id: 3, nome: 'Lab Central', cnpj: '11.222.333/0001-44', telefone: '(11) 9876-5432', endereco: 'Rua Oscar Freire, 200 - São Paulo' },
+//    { id: 1, nome: 'Hospital São Lucas', cnpj: '12.345.678/0001-90', telefone: '(11) 3456-7890', endereco: 'Av. Paulista, 1000 - São Paulo' },
+//    { id: 2, nome: 'Clínica Santa Maria', cnpj: '98.765.432/0001-10', telefone: '(11) 2345-6789', endereco: 'Rua Augusta, 500 - São Paulo' },
+//    { id: 3, nome: 'Lab Central', cnpj: '11.222.333/0001-44', telefone: '(11) 9876-5432', endereco: 'Rua Oscar Freire, 200 - São Paulo' },
 ];
-var nextId = 4;
+//var nextId = 4;
 
 // ======== SEGURANÇA: ESCAPE HTML (previne XSS) ========
 function escapeHTML(str) {
@@ -216,9 +216,9 @@ async function saveHospital(e) {
             name: nome,
             cnpj: cnpj,
             telephone: telefone,
-            adress: endereco,
+            address: endereco,
             patient: {
-                id: 2 // depois pode vir de um select
+                id: 1 // depois pode vir de um select
             }
         };
 
@@ -246,6 +246,16 @@ async function saveHospital(e) {
         }
 
         console.error('[GestCare] Erro ao salvar hospital:', error);
+    }
+}
+
+async function carregarHospitais() {
+    try {
+        hospitais = await getHospitals();
+        renderHospitais();
+    } catch (error) {
+        console.error('[GestCare] Erro ao carregar hospitais:', error);
+        alert('Erro ao carregar hospitais.');
     }
 }
 

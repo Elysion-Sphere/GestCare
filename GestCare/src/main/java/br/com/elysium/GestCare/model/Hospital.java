@@ -13,7 +13,7 @@ import java.util.Objects;
         "name",
         "cnpj",
         "telephone",
-        "adress",
+        "address",
         "patient"
 })
 @Entity
@@ -37,7 +37,7 @@ public class Hospital implements Serializable {
     private String telephone;
 
     @Column(length = 255)
-    private String adress;
+    private String address;
 
     @ManyToOne
     @NotNull(message = "O Hospital precisa estar vinculado a um paciente")
@@ -60,8 +60,8 @@ public class Hospital implements Serializable {
     public String getTelephone() { return telephone; }
     public void setTelephone(String telephone) { this.telephone = telephone; }
 
-    public String getAdress() { return adress; }
-    public void setAdress(String adress) { this.adress = adress; }
+    public String getAddress() { return address; }
+    public void setAddress(String adress) { this.address = adress; }
 
     public Patient getPatient() { return patient; }
     public void setPatient(Patient patient) { this.patient = patient; }

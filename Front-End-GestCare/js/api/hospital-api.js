@@ -20,3 +20,13 @@ async function createHospital(hospital) {
         throw error;
     }
 }
+
+async function getHospitals() {
+    const response = await fetch(API_URL);
+
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+
+    return response.json();
+}

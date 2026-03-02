@@ -55,7 +55,7 @@ public class HospitalServices {
         entity.setName(hospital.getName());
         entity.setCnpj(hospital.getCnpj());
         entity.setTelephone(hospital.getTelephone());
-        entity.setAdress(hospital.getAdress());
+        entity.setAddress(hospital.getAddress());
 
         // 🔥 Buscar o patient no banco antes de setar
         if (hospital.getPatient() != null) {
