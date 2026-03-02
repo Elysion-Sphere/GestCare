@@ -177,69 +177,75 @@ function closeModal() {
 }
 
 // ======== SALVAR (CRIAR/EDITAR) ========
-function saveHospital(e) {
+async function saveHospital(e) {
     try {
         e.preventDefault();
+
+        console.log("createHospital:", createHospital);
+
         var id = document.getElementById('hospital-id').value;
-        var nome = (document.getElementById('hospital-nome').value || '').trim();
-        var cnpj = (document.getElementById('hospital-cnpj').value || '').trim();
+        var nomeInput = document.getElementById('hospital-nome');
+        var cnpjInput = document.getElementById('hospital-cnpj');
+
+        var nome = (nomeInput.value || '').trim();
+        var cnpj = (cnpjInput.value || '').trim();
         var telefone = (document.getElementById('hospital-telefone').value || '').trim();
         var endereco = (document.getElementById('hospital-endereco').value || '').trim();
 
-        // Validação: Nome obrigatório
+        // ===== Validação Nome =====
         if (!nome) {
             alert('O nome do hospital é obrigatório!');
-            document.getElementById('hospital-nome').focus();
+            nomeInput.focus();
             return;
         }
 
-        // Validação: CNPJ obrigatório e válido
+        // ===== Validação CNPJ =====
         if (!cnpj) {
             alert('O CNPJ é obrigatório!');
-            document.getElementById('hospital-cnpj').focus();
+            cnpjInput.focus();
             return;
         }
 
         if (!validarCNPJ(cnpj)) {
             alert('CNPJ inválido! Verifique os dígitos.');
-            document.getElementById('hospital-cnpj').focus();
+            cnpjInput.focus();
             return;
         }
 
-        // Validação: CNPJ duplicado
-        var cnpjDigits = cnpj.replace(/\D/g, '');
-        var duplicado = hospitais.find(function (h) {
-            return h.cnpj && h.cnpj.replace(/\D/g, '') === cnpjDigits && String(h.id) !== String(id);
-        });
-        if (duplicado) {
-            alert('Já existe um hospital cadastrado com este CNPJ: ' + duplicado.nome);
-            document.getElementById('hospital-cnpj').focus();
-            return;
-        }
+        const hospital = {
+            name: nome,
+            cnpj: cnpj,
+            telephone: telefone,
+            adress: endereco,
+            patient: {
+                id: 2 // depois pode vir de um select
+            }
+        };
+
+        let response;
 
         if (id) {
-            var h = hospitais.find(function (h) { return h.id === parseInt(id); });
-            if (h) {
-                h.nome = nome;
-                h.cnpj = cnpj;
-                h.telefone = telefone;
-                h.endereco = endereco;
-            }
+            hospital.id = parseInt(id);
+            response = await updateHospital(id, hospital);
+            alert('Hospital atualizado com sucesso!');
         } else {
-            hospitais.push({
-                id: nextId++,
-                nome: nome,
-                cnpj: cnpj,
-                telefone: telefone,
-                endereco: endereco
-            });
+            response = await createHospital(hospital);
+            alert('Hospital criado com sucesso!');
         }
 
         closeModal();
-        renderHospitais();
-    } catch (e) {
-        console.error('[GestCare] Erro ao salvar hospital:', e);
-        alert('Erro inesperado ao salvar. Tente novamente.');
+        await carregarHospitais();
+
+    } catch (error) {
+
+        // Tratamento inteligente de erro HTTP
+        if (error.message.includes("409")) {
+            alert("Já existe um hospital com este CNPJ.");
+        } else {
+            alert("Erro ao salvar hospital.");
+        }
+
+        console.error('[GestCare] Erro ao salvar hospital:', error);
     }
 }
 
