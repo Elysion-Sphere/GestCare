@@ -38,6 +38,10 @@ public class HospitalServices {
                 .findByNameContainingIgnoreCaseAndPatientId(name, patientId);
     }
 
+    public List<Hospital> findByPatientId(Long patientId) {
+        return hospitalRepository.findByPatientId(patientId);
+    }
+
     @Transactional
     public Hospital create(Hospital hospital) {
         logger.info("Creating one Hospital!");

@@ -21,8 +21,8 @@ async function createHospital(hospital) {
     }
 }
 
-async function getHospitals() {
-    const response = await fetch(API_URL);
+async function getHospitalsByPatient(patientId) {
+    const response = await fetch(`${API_URL}/patient/${patientId}`);
 
     if (!response.ok) {
         throw new Error(response.status);

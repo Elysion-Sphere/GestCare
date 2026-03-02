@@ -10,4 +10,6 @@ public interface HospitalRepository extends JpaRepository<Hospital, Long> {
             String name,
             Long patientId
     );
+
+    List<Hospital> findByPatientId(Long patientId);
 }

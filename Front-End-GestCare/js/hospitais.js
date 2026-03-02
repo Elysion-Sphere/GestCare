@@ -93,12 +93,13 @@ function buildCardHTML(h) {
         '<div class="hospital-icon">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>' +
         '</div>' +
-        '<h3>' + escapeHTML(h.nome) + '</h3>' +
+        '<h3>' + escapeHTML(h.name) + '</h3>' +
         '</div>' +
         '<div class="hospital-card-body">' +
         (h.cnpj ? '<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="14" y2="12"/></svg> CNPJ: ' + escapeHTML(h.cnpj) + '</p>' : '') +
         (h.telefone ? '<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ' + escapeHTML(h.telefone) + '</p>' : '') +
         (h.endereco ? '<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ' + escapeHTML(h.endereco) + '</p>' : '') +
+        (h.address ? '<p class="hospital-detail">' + escapeHTML(h.address) + '</p>' : '') +
         '</div>' +
         '<div class="hospital-card-actions">' +
         '<button class="btn-edit" onclick="editHospital(' + h.id + ')">' +
@@ -152,7 +153,7 @@ function openModal(id) {
             if (h) {
                 title.textContent = 'Editar Hospital';
                 document.getElementById('hospital-id').value = h.id;
-                document.getElementById('hospital-nome').value = h.nome || '';
+                document.getElementById('hospital-nome').value = h.name || '';
                 document.getElementById('hospital-cnpj').value = h.cnpj || '';
                 document.getElementById('hospital-telefone').value = h.telefone || '';
                 document.getElementById('hospital-endereco').value = h.endereco || '';
@@ -218,7 +219,7 @@ async function saveHospital(e) {
             telephone: telefone,
             address: endereco,
             patient: {
-                id: 1 // depois pode vir de um select
+                id: 2 // depois pode vir de um select
             }
         };
 
@@ -251,7 +252,8 @@ async function saveHospital(e) {
 
 async function carregarHospitais() {
     try {
-        hospitais = await getHospitals();
+        const patientId = 1; // temporário até ter login
+        hospitais = await getHospitalsByPatient(patientId);
         renderHospitais();
     } catch (error) {
         console.error('[GestCare] Erro ao carregar hospitais:', error);
@@ -268,7 +270,7 @@ function deleteHospital(id) {
     try {
         var h = hospitais.find(function (item) { return item.id === id; });
         if (!h) return;
-        if (confirm('Tem certeza que deseja excluir "' + h.nome + '"?\nTodos os documentos vinculados serão perdidos.')) {
+        if (confirm('Tem certeza que deseja excluir "' + h.name + '"?\nTodos os documentos vinculados serão perdidos.')) {
             hospitais = hospitais.filter(function (item) { return item.id !== id; });
             renderHospitais();
         }
@@ -289,7 +291,7 @@ function searchHospitais() {
 
         var filtered = busca
             ? hospitais.filter(function (h) {
-                return h.nome.toLowerCase().indexOf(busca) !== -1 ||
+                return h.name.toLowerCase().indexOf(busca) !== -1 ||
                     (h.cnpj && h.cnpj.indexOf(busca) !== -1);
             })
             : hospitais;
@@ -342,7 +344,8 @@ document.addEventListener('click', function (e) {
 // ======== INICIALIZAR ========
 document.addEventListener('DOMContentLoaded', function () {
     try {
-        renderHospitais();
+        //renderHospitais();
+        carregarHospitais(); // agora busca da API
         setupMasks();
     } catch (e) {
         console.error('[GestCare] Erro na inicialização:', e);

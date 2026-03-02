@@ -34,6 +34,13 @@ public class HospitalController {
         return service.findByHospitalName(name, patientId);
     }
 
+    // Encontra todos os hospitais de um paciente em especifico
+    @GetMapping(value = "/patient/{patientId}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Hospital> findByPatient(@PathVariable Long patientId) {
+        return service.findByPatientId(patientId);
+    }
+
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE

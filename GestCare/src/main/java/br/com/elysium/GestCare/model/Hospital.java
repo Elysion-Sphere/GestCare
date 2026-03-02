@@ -41,7 +41,7 @@ public class Hospital implements Serializable {
 
     @ManyToOne
     @NotNull(message = "O Hospital precisa estar vinculado a um paciente")
-    @JoinColumn(name = "paciente_id")
+    @JoinColumn(name = "paciente_id", nullable = false)
     private Patient patient;
 
     public Hospital() {}
