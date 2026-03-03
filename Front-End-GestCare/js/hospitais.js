@@ -219,7 +219,7 @@ async function saveHospital(e) {
             telephone: telefone,
             address: endereco,
             patient: {
-                id: 2 // depois pode vir de um select
+                id: 1 // depois pode vir de um select
             }
         };
 
