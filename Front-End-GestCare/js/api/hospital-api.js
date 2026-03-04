@@ -30,3 +30,21 @@ async function getHospitalsByPatient(patientId) {
 
     return response.json();
 }
+
+async function deleteHospital(hospitalId) {
+    try {
+        const response = await fetch(`${API_URL}/${hospitalId}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            throw new Error(response.status);
+        }
+
+        return true; // DELETE geralmente não retorna body
+
+    } catch (error) {
+        console.error("[GestCare] Erro ao excluir hospital:", error);
+        throw error;
+    }
+}
