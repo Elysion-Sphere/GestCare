@@ -148,15 +148,15 @@ function openModal(id) {
 
         overlay.classList.add('show');
 
-        if (id) {
+        if (Number(id) > 0) {
             var h = hospitais.find(function (h) { return h.id === id; });
             if (h) {
                 title.textContent = 'Editar Hospital';
                 document.getElementById('hospital-id').value = h.id;
                 document.getElementById('hospital-nome').value = h.name || '';
                 document.getElementById('hospital-cnpj').value = h.cnpj || '';
-                document.getElementById('hospital-telefone').value = h.telefone || '';
-                document.getElementById('hospital-endereco').value = h.endereco || '';
+                document.getElementById('hospital-telefone').value = h.telephone || '';
+                document.getElementById('hospital-endereco').value = h.address || '';
             }
         } else {
             title.textContent = 'Novo Hospital';
@@ -180,9 +180,8 @@ function closeModal() {
 // ======== SALVAR (CRIAR/EDITAR) ========
 async function saveHospital(e) {
     try {
+        const patientId = 1;
         e.preventDefault();
-
-        console.log("createHospital:", createHospital);
 
         var id = document.getElementById('hospital-id').value;
         var nomeInput = document.getElementById('hospital-nome');
@@ -225,13 +224,15 @@ async function saveHospital(e) {
 
         let response;
 
-        if (id) {
-            hospital.id = parseInt(id);
-            response = await updateHospital(id, hospital);
-            alert('Hospital atualizado com sucesso!');
+        if (id && id.trim() !== "") {
+
+            response = await updateHospital(id, hospital, patientId);
+            alert("Hospital atualizado com sucesso!");
+
         } else {
+
             response = await createHospital(hospital);
-            alert('Hospital criado com sucesso!');
+            alert("Hospital criado com sucesso!");
         }
 
         closeModal();

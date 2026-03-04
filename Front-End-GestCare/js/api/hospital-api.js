@@ -31,6 +31,26 @@ async function getHospitalsByPatient(patientId) {
     return response.json();
 }
 
+async function updateHospital(id, hospital, patientId) {
+
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ...hospital,
+            patient: { id: patientId }
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+
+    return response.json();
+}
+
 async function deleteHospital(hospitalId) {
     try {
         const response = await fetch(`${API_URL}/${hospitalId}`, {

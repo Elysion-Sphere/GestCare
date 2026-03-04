@@ -50,11 +50,13 @@ public class HospitalController {
     }
 
     @PutMapping(
+            value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Hospital update(@Valid @RequestBody Hospital hospital) {
-        return service.update(hospital);
+    public Hospital update(@PathVariable Long id,
+                           @Valid @RequestBody Hospital hospital) {
+        return service.update(id, hospital);
     }
 
     @DeleteMapping(value = "/{id}")

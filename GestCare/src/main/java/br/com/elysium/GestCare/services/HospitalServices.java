@@ -8,6 +8,8 @@ import br.com.elysium.GestCare.repositories.PatientRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -49,26 +51,30 @@ public class HospitalServices {
     }
 
     @Transactional
-    public Hospital update(Hospital hospital) {
+    public Hospital update(Long id, Hospital hospital) {
 
-        logger.info("Updating one Hospital!");
+        logger.info("Updating Hospital!");
 
-        Hospital entity = hospitalRepository.findById(hospital.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        Hospital entity = hospitalRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("No records found for this ID!"));
 
+        // 🔐 REGRA DE SEGURANÇA:
+        // Não permitir trocar o paciente do hospital
+        if (hospital.getPatient() != null &&
+                entity.getPatient().getId() != hospital.getPatient().getId()) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "It is not allowed to change the patient of this hospital!"
+            );
+        }
+
+        // 🔄 Atualiza apenas os dados do hospital
         entity.setName(hospital.getName());
         entity.setCnpj(hospital.getCnpj());
         entity.setTelephone(hospital.getTelephone());
         entity.setAddress(hospital.getAddress());
-
-        // 🔥 Buscar o patient no banco antes de setar
-        if (hospital.getPatient() != null) {
-            Patient patient = patientRepository.findById(
-                    hospital.getPatient().getId()
-            ).orElseThrow(() -> new ResourceNotFoundException("Patient not found!"));
-
-            entity.setPatient(patient);
-        }
 
         return hospitalRepository.save(entity);
     }
