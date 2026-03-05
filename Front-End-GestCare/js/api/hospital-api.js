@@ -48,9 +48,9 @@ async function getHospitalsByPatient(patientId) {
     return response.json();
 }
 
-async function updateHospital (id, hospital) {
+async function updateHospital (hospital) {
     try {
-        const response = await fetch(`${API_URL}/${id}`, {
+        const response = await fetch(API_URL, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
