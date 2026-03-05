@@ -21,6 +21,23 @@ async function createHospital(hospital) {
     }
 }
 
+async function deleteHospitalAPI(id) {
+    try {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            throw new Error("Erro ao excluir hospital");
+        }
+
+        return true;
+    } catch (error) {
+        console.error("[GestCare] Erro na API:", error);
+        throw error;
+    }
+}
+
 async function getHospitalsByPatient(patientId) {
     const response = await fetch(`${API_URL}/patient/${patientId}`);
 

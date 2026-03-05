@@ -6,9 +6,9 @@
 
 // ======== DADOS SIMULADOS ========
 var hospitais = [
-//    { id: 1, nome: 'Hospital São Lucas', cnpj: '12.345.678/0001-90', telefone: '(11) 3456-7890', endereco: 'Av. Paulista, 1000 - São Paulo' },
-//    { id: 2, nome: 'Clínica Santa Maria', cnpj: '98.765.432/0001-10', telefone: '(11) 2345-6789', endereco: 'Rua Augusta, 500 - São Paulo' },
-//    { id: 3, nome: 'Lab Central', cnpj: '11.222.333/0001-44', telefone: '(11) 9876-5432', endereco: 'Rua Oscar Freire, 200 - São Paulo' },
+    //    { id: 1, nome: 'Hospital São Lucas', cnpj: '12.345.678/0001-90', telefone: '(11) 3456-7890', endereco: 'Av. Paulista, 1000 - São Paulo' },
+    //    { id: 2, nome: 'Clínica Santa Maria', cnpj: '98.765.432/0001-10', telefone: '(11) 2345-6789', endereco: 'Rua Augusta, 500 - São Paulo' },
+    //    { id: 3, nome: 'Lab Central', cnpj: '11.222.333/0001-44', telefone: '(11) 9876-5432', endereco: 'Rua Oscar Freire, 200 - São Paulo' },
 ];
 //var nextId = 4;
 
@@ -266,15 +266,16 @@ function editHospital(id) {
 }
 
 // ======== EXCLUIR ========
-function deleteHospital(id) {
+async function deleteHospital(id) {
     try {
         var h = hospitais.find(function (item) { return item.id === id; });
         if (!h) return;
         if (confirm('Tem certeza que deseja excluir "' + h.name + '"?\nTodos os documentos vinculados serão perdidos.')) {
-            hospitais = hospitais.filter(function (item) { return item.id !== id; });
-            renderHospitais();
+            await deleteHospitalAPI(id);
+            await carregarHospitais();
         }
     } catch (e) {
+        alert('Erro ao excluir hospital.');
         console.error('[GestCare] Erro ao excluir hospital:', e);
     }
 }
