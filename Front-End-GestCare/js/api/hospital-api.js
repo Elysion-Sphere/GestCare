@@ -47,3 +47,25 @@ async function getHospitalsByPatient(patientId) {
 
     return response.json();
 }
+
+async function updateHospital (id, hospital) {
+    try {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(hospital)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao atualizar hospital: ${response.status}`);
+        }
+
+        return await response.json();
+
+    } catch (error) {
+        console.error("[GestCare] Erro na API:", error);
+        throw error;
+    }
+}
