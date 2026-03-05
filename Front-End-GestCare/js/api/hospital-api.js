@@ -50,7 +50,7 @@ async function getHospitalsByPatient(patientId) {
 
 async function updateHospital (id, hospital) {
     try {
-        const response = await fetch(`${API_URL}/${id}`, {
+        const response = await fetch(API_URL, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
