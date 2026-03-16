@@ -1,5 +1,6 @@
 package br.com.elysium.GestCare.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import java.util.List;
@@ -26,7 +27,9 @@ public class FileType {
     // A palavra mappedBy indica que essa entidade NÃO é a dona do relacionamento.
     //Quem realmente cria a foreign key no banco é o lado @ManyToOne(Model/File.java).
     @OneToMany(mappedBy = "fileType", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<File> files;
+
 
     // Getters e Setters
     public Long getId() { return id; }

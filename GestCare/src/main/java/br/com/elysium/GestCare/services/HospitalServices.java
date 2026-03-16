@@ -70,7 +70,7 @@ public class HospitalServices {
             );
         }
 
-        // 🔄 Atualiza apenas os dados do hospital
+        // Atualiza apenas os dados do hospital
         entity.setName(hospital.getName());
         entity.setCnpj(hospital.getCnpj());
         entity.setTelephone(hospital.getTelephone());

@@ -1,5 +1,6 @@
 package br.com.elysium.GestCare.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
@@ -64,14 +65,15 @@ public class File {
 
     // Relacionamento com Hospital
     @NotNull(message = "O hospital precisa ser informado")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hospital_id", nullable = false)
     private Hospital hospital;
 
     // Relacionamento com FileType
     @NotNull(message = "O tipo de arquivo precisa ser informado")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "file_type_id", nullable = false)
+    @JsonBackReference
     private FileType fileType;
 
     @PrePersist
