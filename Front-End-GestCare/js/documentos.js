@@ -102,12 +102,16 @@ function renderDocs(list) {
 function applyFilters() {
     var tipo = document.getElementById('filter-tipo').value;
     var hospitalId = document.getElementById('filter-hospital').value;
-    var busca = document.getElementById('filter-busca').value.toLowerCase().trim();
+    
+    //Retirado Filtro por Descrição
+    //var busca = document.getElementById('filter-busca').value.toLowerCase().trim();
 
     var filtered = documentos;
     if (tipo) filtered = filtered.filter(function (d) { return d.tipo === tipo; });
     if (hospitalId) filtered = filtered.filter(function (d) { return d.hospitalId === parseInt(hospitalId); });
-    if (busca) filtered = filtered.filter(function (d) { return (d.descricao || '').toLowerCase().indexOf(busca) !== -1; });
+    
+    //Retirado Filtro por Descrição
+    //if (busca) filtered = filtered.filter(function (d) { return (d.descricao || '').toLowerCase().indexOf(busca) !== -1; });
 
     renderDocs(filtered);
 }
