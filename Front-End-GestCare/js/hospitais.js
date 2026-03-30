@@ -97,7 +97,7 @@ function buildCardHTML(h) {
         '</div>' +
         '<div class="hospital-card-body">' +
         (h.cnpj ? '<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="14" y2="12"/></svg> CNPJ: ' + escapeHTML(h.cnpj) + '</p>' : '') +
-        (h.telefone ? '<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ' + escapeHTML(h.telefone) + '</p>' : '') +
+        (h.telephone ? '<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ' + escapeHTML(h.telephone) + '</p>' : '') +
         (h.endereco ? '<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ' + escapeHTML(h.endereco) + '</p>' : '') +
         (h.address ? '<p class="hospital-detail">' + escapeHTML(h.address) + '</p>' : '') +
         '</div>' +
@@ -257,8 +257,17 @@ async function carregarHospitais() {
         hospitais = await getHospitalsByPatient(patientId);
         renderHospitais();
     } catch (error) {
-        console.error('[GestCare] Erro ao carregar hospitais:', error);
-        alert('Erro ao carregar hospitais.');
+        console.warn('[GestCare] API indisponível, renderizando estado vazio:', error);
+        hospitais = [];
+        renderHospitais();
+        // Mostrar mensagem no empty-state sem alert
+        const empty = document.getElementById('empty-state');
+        if (empty) {
+            const h3 = empty.querySelector('h3');
+            const p = empty.querySelector('p');
+            if (h3) h3.textContent = 'Serviço temporariamente indisponível';
+            if (p) p.textContent = 'Não foi possível conectar ao servidor. Tente novamente mais tarde.';
+        }
     }
 }
 
@@ -281,14 +290,34 @@ function editHospital(id) {
 //}
 
 async function excluirHospital(id) {
+    try {
+        // Usa == para funcionar mesmo se id vier como string do onclick HTML
+        var h = hospitais.find(function (item) { return item.id == id; });
+        if (!h) {
+            console.warn('[GestCare] Hospital não encontrado para exclusão, id:', id);
+            return;
+        }
 
-    if (!confirm("Deseja realmente excluir este hospital?")) {
-        return;
+        if (!confirm('Tem certeza que deseja excluir "' + h.name + '"?\nTodos os documentos vinculados serão perdidos.')) {
+            return;
+        }
+
+        await deleteHospital(Number(id));
+        await carregarHospitais();
+
+    } catch (e) {
+        const msg = e && e.message ? e.message : String(e);
+        if (msg.includes('404')) {
+            alert('Hospital não encontrado no servidor.');
+        } else if (msg.includes('409') || msg.includes('500')) {
+            alert('Não foi possível excluir: o hospital possui documentos vinculados.');
+        } else {
+            alert('Erro ao excluir hospital: ' + msg);
+        }
+        console.error('[GestCare] Erro ao excluir hospital:', e);
     }
-
-    await deleteHospital(id);
-    await carregarHospitais(); // 🔥 atualiza o grid
 }
+
 
 // ======== BUSCA POR NOME ========
 function searchHospitais() {
