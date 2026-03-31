@@ -73,7 +73,7 @@ public class File {
     @NotNull(message = "O tipo de arquivo precisa ser informado")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "file_type_id", nullable = false)
-    @JsonBackReference
+    //@JsonBackReference
     private FileType fileType;
 
     @PrePersist

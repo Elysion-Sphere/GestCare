@@ -25,7 +25,13 @@ function resolveHospitalNome(d) {
 
 // Extrai o tipo (string) de um documento (API ou local)
 function resolveTipo(d) {
-    if (d.fileType && d.fileType.name) return d.fileType.name;
+    console.log('Resolving tipo para documento:', d);
+    // 1. Tenta pegar da estrutura da API (objeto aninhado)
+    if (d.fileType) {
+        
+        return d.fileType.name || d.fileType.nome || '—';
+    }
+    // 2. Fallback para caso o dado venha de um formulário local/antigo
     return d.tipo || '—';
 }
 
