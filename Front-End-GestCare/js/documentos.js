@@ -1,36 +1,45 @@
 /* ========================================
    GESTCARE - DOCUMENTOS
-   CRUD completo: listar, adicionar, editar, excluir, filtrar
+   CRUD completo conectado à API
+   Campos da API: id, title, fileDate, description,
+                  fileName, filePath, hospital{id,name},
+                  fileType{id,name}
    ======================================== */
 
-// ======== DADOS SIMULADOS ========
-var hospitais = [
-    { id: 1, nome: 'Hospital São Lucas' },
-    { id: 2, nome: 'Clínica Santa Maria' },
-    { id: 3, nome: 'Lab Central' },
-];
-
-var documentos = [
-    { id: 1, hospitalId: 1, tipo: 'exame', data: '2026-02-27', descricao: 'Hemograma completo', arquivo: 'hemograma.pdf', ext: 'pdf' },
-    { id: 2, hospitalId: 2, tipo: 'consulta', data: '2026-02-25', descricao: 'Consulta cardiológica — acompanhamento', arquivo: 'consulta_cardio.jpg', ext: 'jpg' },
-    { id: 3, hospitalId: 1, tipo: 'receita', data: '2026-02-20', descricao: 'Receita — Losartana 50mg', arquivo: 'receita_losartana.pdf', ext: 'pdf' },
-    { id: 4, hospitalId: 3, tipo: 'laudo', data: '2026-02-15', descricao: 'Laudo de ressonância magnética', arquivo: 'laudo_rm.pdf', ext: 'pdf' },
-    { id: 5, hospitalId: 2, tipo: 'exame', data: '2026-02-10', descricao: 'Eletrocardiograma', arquivo: 'ecg.png', ext: 'png' },
-    { id: 6, hospitalId: 1, tipo: 'consulta', data: '2026-01-28', descricao: 'Retorno clínico geral', arquivo: 'retorno_clinico.pdf', ext: 'pdf' },
-    { id: 7, hospitalId: 3, tipo: 'exame', data: '2026-01-15', descricao: 'Glicemia em jejum', arquivo: 'glicemia.pdf', ext: 'pdf' },
-];
-var nextDocId = 8;
+// ======== DADOS ========
+var hospitais  = []; // preenchido pela API de hospitais
+var documentos = []; // preenchido pela API de arquivos
 var selectedFile = null;
 
 // ======== UTILITÁRIOS ========
-function getHospitalName(id) {
-    var h = hospitais.find(function (h) { return h.id === id; });
-    return h ? h.nome : 'Desconhecido';
+
+// Extrai o nome do hospital de um objeto documento (API ou local)
+function resolveHospitalNome(d) {
+    if (d.hospital && (d.hospital.name || d.hospital.nome)) {
+        return d.hospital.name || d.hospital.nome;
+    }
+    // fallback para formato local antigo
+    var h = hospitais.find(function (h) { return h.id == d.hospitalId; });
+    return h ? (h.name || h.nome || 'Desconhecido') : 'Desconhecido';
 }
 
+// Extrai o tipo (string) de um documento (API ou local)
+function resolveTipo(d) {
+    console.log('Resolving tipo para documento:', d);
+    // 1. Tenta pegar da estrutura da API (objeto aninhado)
+    if (d.fileType) {
+        
+        return d.fileType.name || d.fileType.nome || '—';
+    }
+    // 2. Fallback para caso o dado venha de um formulário local/antigo
+    return d.tipo || '—';
+}
+
+// Formata data ISO (yyyy-MM-dd) → dd/MM/yyyy
 function formatDate(dateStr) {
     if (!dateStr) return '—';
-    var parts = dateStr.split('-');
+    var parts = String(dateStr).split('T')[0].split('-');
+    if (parts.length < 3) return dateStr;
     return parts[2] + '/' + parts[1] + '/' + parts[0];
 }
 
@@ -45,19 +54,28 @@ function getFileClass(ext) {
     return ext === 'pdf' ? 'pdf' : 'img';
 }
 
+function extractExt(fileName) {
+    if (!fileName) return '—';
+    var parts = fileName.split('.');
+    return parts.length > 1 ? parts.pop().toLowerCase() : '?';
+}
+
 // ======== POPULAR SELECTS DE HOSPITAL ========
 function populateHospitalSelects() {
-    var selects = [document.getElementById('filter-hospital'), document.getElementById('doc-hospital')];
+    var selects = [
+        document.getElementById('filter-hospital'),
+        document.getElementById('doc-hospital')
+    ];
     selects.forEach(function (sel) {
         if (!sel) return;
         var currentValue = sel.value;
-        var firstOption = sel.options[0];
+        var firstOption  = sel.options[0];
         sel.innerHTML = '';
         sel.appendChild(firstOption);
         hospitais.forEach(function (h) {
             var opt = document.createElement('option');
-            opt.value = h.id;
-            opt.textContent = h.nome;
+            opt.value       = h.id;
+            opt.textContent = h.name || h.nome || 'Hospital';
             sel.appendChild(opt);
         });
         if (currentValue) sel.value = currentValue;
@@ -80,12 +98,20 @@ function renderDocs(list) {
     if (empty) empty.style.display = 'none';
 
     tbody.innerHTML = docs.map(function (d) {
+        // Compatível com resposta da API e com formato local
+        var tipo        = resolveTipo(d);
+        var hospitalNome = resolveHospitalNome(d);
+        var data        = d.fileDate || d.data || '';
+        var descricao   = d.description || d.descricao || '—';
+        var arquivo     = d.fileName   || d.arquivo    || '—';
+        var ext         = extractExt(arquivo);
+
         return '<tr>' +
-            '<td class="time-cell">' + formatDate(d.data) + '</td>' +
-            '<td><span class="doc-type-badge ' + d.tipo + '">' + d.tipo + '</span></td>' +
-            '<td>' + escapeDocHTML(getHospitalName(d.hospitalId)) + '</td>' +
-            '<td>' + escapeDocHTML(d.descricao || '—') + '</td>' +
-            '<td><span class="file-badge ' + getFileClass(d.ext) + '">' + d.ext.toUpperCase() + '</span></td>' +
+            '<td class="time-cell">' + formatDate(data) + '</td>' +
+            '<td><span class="doc-type-badge ' + escapeDocHTML(tipo) + '">' + escapeDocHTML(tipo.toUpperCase()) + '</span></td>' +
+            '<td>' + escapeDocHTML(hospitalNome) + '</td>' +
+            '<td>' + escapeDocHTML(descricao) + '</td>' +
+            '<td><span class="file-badge ' + getFileClass(ext) + '">' + ext.toUpperCase() + '</span></td>' +
             '<td class="actions-cell">' +
             '<button class="action-btn" title="Editar" onclick="editDoc(' + d.id + ')">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
@@ -100,14 +126,16 @@ function renderDocs(list) {
 
 // ======== FILTROS ========
 function applyFilters() {
-    var tipo = document.getElementById('filter-tipo').value;
-    var hospitalId = document.getElementById('filter-hospital').value;
-    var busca = document.getElementById('filter-busca').value.toLowerCase().trim();
+    var tipoFiltro     = document.getElementById('filter-tipo').value;
+    var hospitalFiltro = document.getElementById('filter-hospital').value;
 
-    var filtered = documentos;
-    if (tipo) filtered = filtered.filter(function (d) { return d.tipo === tipo; });
-    if (hospitalId) filtered = filtered.filter(function (d) { return d.hospitalId === parseInt(hospitalId); });
-    if (busca) filtered = filtered.filter(function (d) { return (d.descricao || '').toLowerCase().indexOf(busca) !== -1; });
+    var filtered = documentos.filter(function (d) {
+        var tipo       = resolveTipo(d);
+        var hospId     = d.hospital ? d.hospital.id : d.hospitalId;
+        var tipoOk     = !tipoFiltro     || tipo == tipoFiltro;
+        var hospitalOk = !hospitalFiltro || String(hospId) === hospitalFiltro;
+        return tipoOk && hospitalOk;
+    });
 
     renderDocs(filtered);
 }
@@ -115,27 +143,38 @@ function applyFilters() {
 // ======== MODAL ========
 function openDocModal(id) {
     var overlay = document.getElementById('modal-overlay');
-    var title = document.getElementById('modal-title');
-    var form = document.getElementById('doc-form');
+    var title   = document.getElementById('modal-title');
+    var form    = document.getElementById('doc-form');
     if (!overlay || !title || !form) return;
 
     overlay.classList.add('show');
     selectedFile = null;
-    document.getElementById('upload-preview').style.display = 'none';
+    document.getElementById('upload-preview').style.display     = 'none';
     document.getElementById('upload-placeholder').style.display = 'flex';
 
     if (id) {
-        var d = documentos.find(function (d) { return d.id === id; });
+        var d = documentos.find(function (d) { return d.id == id; });
         if (d) {
             title.textContent = 'Editar Documento';
             document.getElementById('doc-id').value = d.id;
-            document.getElementById('doc-hospital').value = d.hospitalId;
-            document.getElementById('doc-tipo').value = d.tipo;
-            document.getElementById('doc-data').value = d.data;
-            document.getElementById('doc-descricao').value = d.descricao || '';
-            document.getElementById('file-name').textContent = d.arquivo;
-            document.getElementById('upload-preview').style.display = 'flex';
-            document.getElementById('upload-placeholder').style.display = 'none';
+
+            // Campos API ou local
+            var hospId = d.hospital ? d.hospital.id : d.hospitalId;
+            var tipo   = resolveTipo(d);
+            var data   = d.fileDate || d.data || '';
+            var desc   = d.description || d.descricao || '';
+            var arq    = d.fileName   || d.arquivo    || '';
+
+            document.getElementById('doc-hospital').value  = hospId || '';
+            document.getElementById('doc-tipo').value      = tipo  !== '—' ? tipo : '';
+            document.getElementById('doc-data').value      = String(data).split('T')[0];
+            document.getElementById('doc-descricao').value = desc;
+            document.getElementById('file-name').textContent = arq;
+
+            if (arq) {
+                document.getElementById('upload-preview').style.display     = 'flex';
+                document.getElementById('upload-placeholder').style.display = 'none';
+            }
         }
     } else {
         title.textContent = 'Novo Documento';
@@ -160,7 +199,6 @@ function handleFileSelect(e) {
         e.target.value = '';
         return;
     }
-
     if (file.size > 10 * 1024 * 1024) {
         alert('Arquivo muito grande! Máximo 10MB.');
         e.target.value = '';
@@ -168,102 +206,145 @@ function handleFileSelect(e) {
     }
 
     selectedFile = file;
-    document.getElementById('file-name').textContent = file.name;
-    document.getElementById('upload-preview').style.display = 'flex';
+    document.getElementById('file-name').textContent            = file.name;
+    document.getElementById('upload-preview').style.display     = 'flex';
     document.getElementById('upload-placeholder').style.display = 'none';
 }
 
 function removeFile() {
     selectedFile = null;
-    document.getElementById('doc-arquivo').value = '';
-    document.getElementById('upload-preview').style.display = 'none';
+    document.getElementById('doc-arquivo').value                = '';
+    document.getElementById('upload-preview').style.display     = 'none';
     document.getElementById('upload-placeholder').style.display = 'flex';
 }
 
-// ======== SALVAR DOCUMENTO ========
-function saveDoc(e) {
+// ======== SALVAR DOCUMENTO (API) ========
+async function saveDoc(e) {
     e.preventDefault();
-    var id = document.getElementById('doc-id').value;
+
+    var id        = document.getElementById('doc-id').value;
     var hospitalId = parseInt(document.getElementById('doc-hospital').value);
-    var tipo = document.getElementById('doc-tipo').value;
-    var data = document.getElementById('doc-data').value;
+    var tipo      = document.getElementById('doc-tipo').value;
+    var data      = document.getElementById('doc-data').value;
     var descricao = document.getElementById('doc-descricao').value.trim();
 
+    // ── Validações ──────────────────────────────────────────────
     if (!hospitalId || !tipo || !data) {
-        alert('Preencha os campos obrigatórios!');
+        alert('Preencha os campos obrigatórios: Hospital, Tipo e Data!');
         return;
     }
-
-    // Data não pode ser futura (RN15)
     if (new Date(data) > new Date()) {
         alert('A data do documento não pode ser futura.');
         return;
     }
 
-    if (id) {
-        var d = documentos.find(function (d) { return d.id === parseInt(id); });
-        if (d) {
-            d.hospitalId = hospitalId;
-            d.tipo = tipo;
-            d.data = data;
-            d.descricao = descricao;
-            if (selectedFile) {
-                d.arquivo = selectedFile.name;
-                d.ext = selectedFile.name.split('.').pop().toLowerCase();
-            }
-        }
-    } else {
-        if (!selectedFile) {
-            alert('Selecione um arquivo!');
-            return;
-        }
-        var ext = selectedFile.name.split('.').pop().toLowerCase();
-        documentos.push({
-            id: nextDocId++,
-            hospitalId: hospitalId,
-            tipo: tipo,
-            data: data,
-            descricao: descricao,
-            arquivo: selectedFile.name,
-            ext: ext
-        });
+    // Para criar, precisa de arquivo
+    var existingDoc = id ? documentos.find(function (d) { return d.id == id; }) : null;
+    if (!id && !selectedFile) {
+        alert('Selecione um arquivo!');
+        return;
     }
 
-    closeDocModal();
-    renderDocs();
+    // ── Montar payload para API ──────────────────────────────────
+    var fileName = selectedFile ? selectedFile.name : (existingDoc && (existingDoc.fileName || existingDoc.arquivo)) || '';
+    var filePath = 'uploads/' + fileName;
+
+    var payload = {
+        title:       descricao || fileName,   // backend exige title
+        fileDate:    data,
+        description: descricao,
+        fileName:    fileName,
+        filePath:    filePath,
+        hospital:    { id: hospitalId },
+        fileType:    { id: TIPO_PARA_ID[tipo] || 1 }
+    };
+
+    // ── Chamar API ───────────────────────────────────────────────
+    try {
+        if (id) {
+            await updateFile(Number(id), payload);
+            alert('Documento atualizado com sucesso!');
+        } else {
+            await createFile(payload);
+            alert('Documento criado com sucesso!');
+        }
+
+        closeDocModal();
+        // Recarregar lista da API
+        documentos = await getFilesByPatient(1);
+        renderDocs();
+
+    } catch (err) {
+        var status = err && err.message ? err.message : String(err);
+        if (status === '404' || status === '405') {
+            alert('O backend ainda não possui endpoint para ' + (id ? 'editar' : 'criar') + ' documentos.\nEntre em contato com a equipe de backend para adicionar POST/PUT em /file.');
+        } else if (status === '409') {
+            alert('Conflito: já existe um documento com esses dados.');
+        } else {
+            alert('Erro ao salvar documento (HTTP ' + status + ').');
+        }
+        console.error('[GestCare] Erro ao salvar doc:', err);
+    }
 }
 
 function editDoc(id) {
     openDocModal(id);
 }
 
-// ======== EXCLUIR DOCUMENTO ========
-function deleteDoc(id) {
-    var d = documentos.find(function (item) { return item.id === id; });
+// ======== EXCLUIR DOCUMENTO (API) ========
+async function deleteDoc(id) {
+    var d = documentos.find(function (item) { return item.id == id; });
     if (!d) return;
-    if (confirm('Excluir "' + (d.descricao || d.arquivo) + '"?')) {
-        documentos = documentos.filter(function (item) { return item.id !== id; });
+
+    var nome = d.description || d.descricao || d.fileName || d.arquivo || 'este documento';
+    if (!confirm('Excluir "' + nome + '"?')) return;
+
+    try {
+        await deleteFile(Number(id));
+        documentos = await getFilesByPatient(1);
         renderDocs();
+    } catch (err) {
+        var status = err && err.message ? err.message : String(err);
+        if (status === '404' || status === '405') {
+            alert('O backend ainda não possui endpoint para excluir documentos (DELETE /file).');
+        } else {
+            alert('Erro ao excluir documento (HTTP ' + status + ').');
+        }
+        console.error('[GestCare] Erro ao excluir doc:', err);
     }
 }
 
-// ======== FECHAR MODAL COM ESC ========
+// ======== FECHAR MODAL ========
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeDocModal();
 });
-
-// ======== FECHAR MODAL CLICANDO FORA ========
 document.addEventListener('click', function (e) {
     var overlay = document.getElementById('modal-overlay');
     if (e.target === overlay) closeDocModal();
 });
 
 // ======== INICIALIZAR ========
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
+    const patientId = 1; // TODO: substituir pelo ID real do paciente logado
+
+    // Hospitais (independente)
     try {
-        populateHospitalSelects();
-        renderDocs();
+        hospitais = await getHospitalsByPatient(patientId);
+        console.log('[GestCare] Hospitais carregados:', hospitais.length);
     } catch (e) {
-        console.error('[GestCare] Erro na inicialização documentos:', e);
+        console.warn('[GestCare] Falha ao carregar hospitais:', e);
+        hospitais = [];
     }
+
+    // Documentos (independente)
+    try {
+        documentos = await getFilesByPatient(patientId);
+        console.log('[GestCare] Documentos carregados:', documentos.length);
+    } catch (e) {
+        console.warn('[GestCare] Falha ao carregar documentos:', e);
+        documentos = [];
+    }
+
+    populateHospitalSelects();
+    renderDocs();
 });

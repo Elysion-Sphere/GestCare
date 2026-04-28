@@ -21,23 +21,6 @@ async function createHospital(hospital) {
     }
 }
 
-async function deleteHospitalAPI(id) {
-    try {
-        const response = await fetch(`${API_URL}/${id}`, {
-            method: "DELETE"
-        });
-
-        if (!response.ok) {
-            throw new Error("Erro ao excluir hospital");
-        }
-
-        return true;
-    } catch (error) {
-        console.error("[GestCare] Erro na API:", error);
-        throw error;
-    }
-}
-
 async function getHospitalsByPatient(patientId) {
     const response = await fetch(`${API_URL}/patient/${patientId}`);
 
@@ -48,24 +31,40 @@ async function getHospitalsByPatient(patientId) {
     return response.json();
 }
 
-async function updateHospital (id, hospital) {
+async function updateHospital(id, hospital, patientId) {
+
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ...hospital,
+            patient: { id: patientId }
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+
+    return response.json();
+}
+
+async function deleteHospital(hospitalId) {
     try {
-        const response = await fetch(API_URL, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(hospital)
+        const response = await fetch(`${API_URL}/${hospitalId}`, {
+            method: "DELETE"
         });
 
         if (!response.ok) {
-            throw new Error(`Erro ao atualizar hospital: ${response.status}`);
+            throw new Error(response.status);
         }
 
-        return await response.json();
+        return true; // DELETE geralmente não retorna body
 
     } catch (error) {
-        console.error("[GestCare] Erro na API:", error);
+        console.error("[GestCare] Erro ao excluir hospital:", error);
         throw error;
     }
 }

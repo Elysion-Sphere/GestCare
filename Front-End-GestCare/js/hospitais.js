@@ -6,9 +6,9 @@
 
 // ======== DADOS SIMULADOS ========
 var hospitais = [
-    //    { id: 1, nome: 'Hospital São Lucas', cnpj: '12.345.678/0001-90', telefone: '(11) 3456-7890', endereco: 'Av. Paulista, 1000 - São Paulo' },
-    //    { id: 2, nome: 'Clínica Santa Maria', cnpj: '98.765.432/0001-10', telefone: '(11) 2345-6789', endereco: 'Rua Augusta, 500 - São Paulo' },
-    //    { id: 3, nome: 'Lab Central', cnpj: '11.222.333/0001-44', telefone: '(11) 9876-5432', endereco: 'Rua Oscar Freire, 200 - São Paulo' },
+//    { id: 1, nome: 'Hospital São Lucas', cnpj: '12.345.678/0001-90', telefone: '(11) 3456-7890', endereco: 'Av. Paulista, 1000 - São Paulo' },
+//    { id: 2, nome: 'Clínica Santa Maria', cnpj: '98.765.432/0001-10', telefone: '(11) 2345-6789', endereco: 'Rua Augusta, 500 - São Paulo' },
+//    { id: 3, nome: 'Lab Central', cnpj: '11.222.333/0001-44', telefone: '(11) 9876-5432', endereco: 'Rua Oscar Freire, 200 - São Paulo' },
 ];
 //var nextId = 4;
 
@@ -97,7 +97,7 @@ function buildCardHTML(h) {
         '</div>' +
         '<div class="hospital-card-body">' +
         (h.cnpj ? '<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="14" y2="12"/></svg> CNPJ: ' + escapeHTML(h.cnpj) + '</p>' : '') +
-        (h.telefone ? '<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ' + escapeHTML(h.telefone) + '</p>' : '') +
+        (h.telephone ? '<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ' + escapeHTML(h.telephone) + '</p>' : '') +
         (h.endereco ? '<p class="hospital-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ' + escapeHTML(h.endereco) + '</p>' : '') +
         (h.address ? '<p class="hospital-detail">' + escapeHTML(h.address) + '</p>' : '') +
         '</div>' +
@@ -106,7 +106,7 @@ function buildCardHTML(h) {
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
         ' Editar' +
         '</button>' +
-        '<button class="btn-delete" onclick="deleteHospital(' + h.id + ')">' +
+        '<button class="btn-delete" onclick="excluirHospital(' + h.id + ')">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
         ' Excluir' +
         '</button>' +
@@ -148,15 +148,15 @@ function openModal(id) {
 
         overlay.classList.add('show');
 
-        if (id) {
+        if (Number(id) > 0) {
             var h = hospitais.find(function (h) { return h.id === id; });
             if (h) {
                 title.textContent = 'Editar Hospital';
                 document.getElementById('hospital-id').value = h.id;
                 document.getElementById('hospital-nome').value = h.name || '';
                 document.getElementById('hospital-cnpj').value = h.cnpj || '';
-                document.getElementById('hospital-telefone').value = h.telefone || '';
-                document.getElementById('hospital-endereco').value = h.endereco || '';
+                document.getElementById('hospital-telefone').value = h.telephone || '';
+                document.getElementById('hospital-endereco').value = h.address || '';
             }
         } else {
             title.textContent = 'Novo Hospital';
@@ -180,9 +180,8 @@ function closeModal() {
 // ======== SALVAR (CRIAR/EDITAR) ========
 async function saveHospital(e) {
     try {
+        const patientId = 1;
         e.preventDefault();
-
-        console.log("createHospital:", createHospital);
 
         var id = document.getElementById('hospital-id').value;
         var nomeInput = document.getElementById('hospital-nome');
@@ -225,13 +224,15 @@ async function saveHospital(e) {
 
         let response;
 
-        if (id) {
-            hospital.id = parseInt(id);
-            response = await updateHospital(id, hospital);
-            alert('Hospital atualizado com sucesso!');
+        if (id && id.trim() !== "") {
+
+            response = await updateHospital(id, hospital, patientId);
+            alert("Hospital atualizado com sucesso!");
+
         } else {
+
             response = await createHospital(hospital);
-            alert('Hospital criado com sucesso!');
+            alert("Hospital criado com sucesso!");
         }
 
         closeModal();
@@ -256,8 +257,17 @@ async function carregarHospitais() {
         hospitais = await getHospitalsByPatient(patientId);
         renderHospitais();
     } catch (error) {
-        console.error('[GestCare] Erro ao carregar hospitais:', error);
-        alert('Erro ao carregar hospitais.');
+        console.warn('[GestCare] API indisponível, renderizando estado vazio:', error);
+        hospitais = [];
+        renderHospitais();
+        // Mostrar mensagem no empty-state sem alert
+        const empty = document.getElementById('empty-state');
+        if (empty) {
+            const h3 = empty.querySelector('h3');
+            const p = empty.querySelector('p');
+            if (h3) h3.textContent = 'Serviço temporariamente indisponível';
+            if (p) p.textContent = 'Não foi possível conectar ao servidor. Tente novamente mais tarde.';
+        }
     }
 }
 
@@ -266,19 +276,48 @@ function editHospital(id) {
 }
 
 // ======== EXCLUIR ========
-async function deleteHospital(id) {
+//function deleteHospital(id) {
+//    try {
+//        var h = hospitais.find(function (item) { return item.id === id; });
+//        if (!h) return;
+//        if (confirm('Tem certeza que deseja excluir "' + h.name + '"?\nTodos os documentos vinculados serão perdidos.')) {
+//            hospitais = hospitais.filter(function (item) { return item.id !== id; });
+//            renderHospitais();
+//        }
+//    } catch (e) {
+ //       console.error('[GestCare] Erro ao excluir hospital:', e);
+//    }
+//}
+
+async function excluirHospital(id) {
     try {
-        var h = hospitais.find(function (item) { return item.id === id; });
-        if (!h) return;
-        if (confirm('Tem certeza que deseja excluir "' + h.name + '"?\nTodos os documentos vinculados serão perdidos.')) {
-            await deleteHospitalAPI(id);
-            await carregarHospitais();
+        // Usa == para funcionar mesmo se id vier como string do onclick HTML
+        var h = hospitais.find(function (item) { return item.id == id; });
+        if (!h) {
+            console.warn('[GestCare] Hospital não encontrado para exclusão, id:', id);
+            return;
         }
+
+        if (!confirm('Tem certeza que deseja excluir "' + h.name + '"?\nTodos os documentos vinculados serão perdidos.')) {
+            return;
+        }
+
+        await deleteHospital(Number(id));
+        await carregarHospitais();
+
     } catch (e) {
-        alert('Erro ao excluir hospital.');
+        const msg = e && e.message ? e.message : String(e);
+        if (msg.includes('404')) {
+            alert('Hospital não encontrado no servidor.');
+        } else if (msg.includes('409') || msg.includes('500')) {
+            alert('Não foi possível excluir: o hospital possui documentos vinculados.');
+        } else {
+            alert('Erro ao excluir hospital: ' + msg);
+        }
         console.error('[GestCare] Erro ao excluir hospital:', e);
     }
 }
+
 
 // ======== BUSCA POR NOME ========
 function searchHospitais() {
