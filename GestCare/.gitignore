@@ -48,3 +48,6 @@ hs_err_pid*
 !**/applicationExample.yaml
 !**/applicationExample.yml
 .idea
+
+# uploads (arquivos enviados)
+uploads/
