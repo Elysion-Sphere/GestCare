@@ -97,6 +97,7 @@
         <!-- Filtros + Botão -->
         <section class="page-actions">
             <div class="filters">
+                <!-- Retirando Filtro por tipo
                 <select id="filter-tipo" onchange="applyFilters()">
                     <option value="">Todos os tipos</option>
                     <option value="consulta">Consulta</option>
@@ -104,9 +105,12 @@
                     <option value="exame">Exame</option>
                     <option value="receita">Receita</option>
                 </select>
+            -->
+                
+                <!-- Retirando Filtro por Hospital
                 <select id="filter-hospital" onchange="applyFilters()">
                     <option value="">Todos os hospitais</option>
-                </select>
+                </select> -->
                
                <!-- Retirado Filtro por Descrição
                 <input type="text" id="filter-busca" placeholder="Buscar descrição..." oninput="applyFilters()"
@@ -213,7 +217,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-cancel" onclick="closeDocModal()">Cancelar</button>
-                    <button type="submit" class="btn-save">Salvar</button>
+                    <button type="button" class="btn-save" onclick="saveDoc(event)">Salvar</button>
                 </div>
             </form>
         </div>

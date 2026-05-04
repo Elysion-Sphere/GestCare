@@ -9,10 +9,12 @@ const FILE_API_URL = "http://localhost:8080/file";
 // Mapeamento: tipo (string) → file_type_id no banco
 // Deve bater com os IDs inseridos via HeidiSQL na tabela file_type
 const TIPO_PARA_ID = {
-    consulta: 1,
-    laudo:    2,
-    exame:    3,
-    receita:  4
+    exame:    1,
+    receita:  2,
+    laudo:    3,
+    consulta: 4
+    
+    
 };
 
 // ── GET: listar arquivos de um paciente ──────────────────────────
@@ -23,13 +25,21 @@ async function getFilesByPatient(patientId) {
 }
 
 // ── POST: criar novo documento ───────────────────────────────────
-// Requer: POST /file no FileController (ainda não existe no backend)
-async function createFile(fileData) {
-    const response = await fetch(FILE_API_URL, {
+async function createFile(file, hospitalId, fileTypeId, fileDate, description) {
+    const formData = new FormData();
+    
+    // O primeiro parâmetro deve ser IGUAL ao @RequestParam do Java
+    formData.append("file", file); 
+    formData.append("hospitalId", hospitalId);
+    formData.append("fileTypeId", fileTypeId);
+    formData.append("fileDate", fileDate);
+    formData.append("description", description);
+
+    const response = await fetch(`${FILE_API_URL}/upload`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(fileData)
+        body: formData // Enviamos o formData diretamente
     });
+
     if (!response.ok) throw new Error(response.status);
     return response.json();
 }

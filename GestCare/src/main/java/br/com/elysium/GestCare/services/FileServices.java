@@ -61,10 +61,14 @@ public class FileServices {
             multipartFile.transferTo(new java.io.File(filePath));
 
 
-            Hospital hospital = hospitalRepository.findById(hospitalId).orElseThrow();
-            FileType fileType = fileTypeRepository.findById(fileTypeId).orElseThrow();
+            Hospital hospital = hospitalRepository.findById(hospitalId)
+                    .orElseThrow(() -> new RuntimeException("ERRO: Hospital ID " + hospitalId + " não existe!"));
 
-            Patient patient = patientRepository.findById(1L).orElseThrow();
+            FileType fileType = fileTypeRepository.findById(fileTypeId)
+                    .orElseThrow(() -> new RuntimeException("ERRO: FileType ID " + fileTypeId + " não existe!"));
+
+            Patient patient = patientRepository.findById(1L)
+                    .orElseThrow(() -> new RuntimeException("ERRO: Paciente ID 1 não existe no banco!"));
 
 
             File file = new File();

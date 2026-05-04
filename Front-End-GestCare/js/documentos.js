@@ -112,7 +112,12 @@ function renderDocs(list) {
             '<td>' + escapeDocHTML(hospitalNome) + '</td>' +
             '<td>' + escapeDocHTML(descricao) + '</td>' +
             '<td><span class="file-badge ' + getFileClass(ext) + '">' + ext.toUpperCase() + '</span></td>' +
-            '<td class="actions-cell">' +
+            '<td class="actions-cell">' + 
+            // NOVO BOTÃO: VISUALIZAR
+            '<button class="action-btn" title="Visualizar" onclick="viewDoc(\'' + d.fileName + '\')">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">' +
+            '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
+            '</button>' +
             '<button class="action-btn" title="Editar" onclick="editDoc(' + d.id + ')">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
             '</button>' +
@@ -265,12 +270,18 @@ async function saveDoc(e) {
             await updateFile(Number(id), payload);
             alert('Documento atualizado com sucesso!');
         } else {
-            await createFile(payload);
+            // CHAMADA CORRETA PARA O UPLOAD:
+            await createFile(
+                selectedFile, 
+                hospitalId, 
+                TIPO_PARA_ID[tipo] || 1, 
+                data, 
+                descricao
+            );
             alert('Documento criado com sucesso!');
         }
 
         closeDocModal();
-        // Recarregar lista da API
         documentos = await getFilesByPatient(1);
         renderDocs();
 
@@ -289,6 +300,22 @@ async function saveDoc(e) {
 
 function editDoc(id) {
     openDocModal(id);
+}
+
+// ======== Visualizar Documento (API) ========
+
+function viewDoc(fileName) {
+    if (!fileName || fileName === '—') {
+        alert("Arquivo não disponível para visualização.");
+        return;
+    }
+    
+    // Onde 8080 é a porta do seu Spring Boot
+    const baseUrl = "http://localhost:8080/files/";
+    const fileUrl = baseUrl + fileName;
+    
+    // Abre o arquivo em uma nova aba
+    window.open(fileUrl, '_blank');
 }
 
 // ======== EXCLUIR DOCUMENTO (API) ========
